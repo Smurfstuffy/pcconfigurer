@@ -10,12 +10,12 @@ const Home = () => {
 
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-white text-center">
-            <h1 className="text-2xl md:text-6xl font-bold text-shadow">PC Configurer</h1>
-            <p className="text-l md:text-3xl text-shadow">Personalize Your Power with PC Configurer </p>
+            <h1 className="text-3xl md:text-6xl font-bold shadow-4xl cursor-default">PC Configurer</h1>
+            <p className="text-xl md:text-3xl shadow-4xl cursor-default">Personalize Your Power with PC Configurer</p>
           </div>
         </div>
       </div>
-      <ItemsGroud/>
+      <div className='bg-gray-200 px-10 md:px-24'><ItemsGroud/></div>
     </>
   );
 };

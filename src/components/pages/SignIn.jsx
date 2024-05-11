@@ -3,6 +3,8 @@ import useFetch from "../../hooks/useFetch";
 import { useUserContext } from "../../hooks/UserContex";
 import { useNavigate } from "react-router-dom";
 
+import backgroundImage from './../../img/PC_Components_2.jpg'
+
 const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -41,19 +43,23 @@ const SignIn = () => {
   }
 
   return (
-    <div className='flex flex-col h-screen justify-center items-center bg-indigo-900'>
-      <h1 className='text-3xl md:text-4xl font-bold text-white'>Please, Sign In</h1>
-      <div className='rounded-xl bg-gray-200 border-gray-200 mt-2 md:mt-4'>
-        <form className='flex flex-col justify-center items-center py-4 px-10 md:px-36 md:py-6'>
-          <input type="text" placeholder='Username' className='input' value={username} onChange={e => setUsername(e.target.value)} />
-          <input type="password" placeholder='Password' className='input mt-4 md:mt-6' value={password} onChange={e => setPassword(e.target.value)} />
-          {error && <p className="text-base md:text-lg text-red-600">Incorrect username or password</p>}
-          <button className='primary-button mt-4 md:mt-6 w-full text-lg md:text-2xl py-2' onClick={handleLogin}>Sign In</button>
-          <p className='font-semibold text-lg md:text-xl mt-4 md:mt-6'>Don't have an account?</p>
-          <button className='secondary-button w-full mt-4 md:mt-6 text-lg md:text-2xl py-2' onClick={handleSignUp}>Sign Up</button>
-        </form>
+    <div className="relative">
+      <img src={backgroundImage} alt="PC_Components_2" className="w-screen object-cover h-screen" />
+      <div className='flex flex-col h-screen justify-center items-center absolute inset-0'>
+        <h1 className='text-3xl md:text-4xl font-bold text-white'>Please, Sign In</h1>
+        <div className='rounded-xl bg-gray-200 border border-gray-400 mt-2 md:mt-4'>
+          <form className='flex flex-col justify-center items-center py-4 px-10 md:px-36 md:py-6'>
+            <input type="text" placeholder='Username' className='input' value={username} onChange={e => setUsername(e.target.value)} />
+            <input type="password" placeholder='Password' className='input mt-4 md:mt-6' value={password} onChange={e => setPassword(e.target.value)} />
+            {error && <p className="text-base md:text-lg text-red-600">Incorrect username or password</p>}
+            <button className='primary-button mt-4 md:mt-6 w-full text-lg md:text-2xl py-2' onClick={handleLogin}>Sign In</button>
+            <p className='font-semibold text-lg md:text-xl mt-4 md:mt-6'>Don't have an account?</p>
+            <button className='primary-button-outline w-full mt-4 md:mt-6 text-lg md:text-2xl py-2' onClick={handleSignUp}>Sign Up</button>
+          </form>
+        </div>
       </div>
     </div>
+
   )
 }
 

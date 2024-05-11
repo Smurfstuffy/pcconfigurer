@@ -9,6 +9,7 @@ import Home from './components/pages/Home';
 import Layout from './components/layouts/Layout';
 import SignIn from './components/pages/SignIn';
 import SignUp from './components/pages/SignUp';
+import { UserProvider } from './hooks/UserContex';
 
 const App = () => {
 
@@ -25,9 +26,9 @@ const App = () => {
   )
 
   return (
-    <div>
+    <UserProvider>
       <RouterProvider router={router} />
-    </div>
+    </UserProvider>
   )
 }
 

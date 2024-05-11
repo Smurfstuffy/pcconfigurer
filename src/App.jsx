@@ -9,6 +9,7 @@ import Home from './components/pages/Home';
 import Layout from './components/layouts/Layout';
 import SignIn from './components/pages/SignIn';
 import SignUp from './components/pages/SignUp';
+import Configuration from './components/pages/Configuration';
 import { UserProvider } from './hooks/UserContex';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
       <Route>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path='configuration' element={<Configuration />}/>
         </Route>
         <Route path='/signup' element={<SignUp />} />
         <Route path='/signin' element={<SignIn />} />

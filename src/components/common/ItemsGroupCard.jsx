@@ -1,4 +1,12 @@
+import { useLocation } from "react-router-dom"
+
 const ItemsGroupCard = () => {
+  const location = useLocation();
+
+  if(location.pathname !== '/') {
+    return null
+  }
+
   return (
     <div className="card flex flex-col justify-around bg-gray-200">
       <h1 class="font-bold text-2xl md:text-4xl">Completed Builds</h1>

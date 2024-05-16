@@ -21,9 +21,9 @@ const Configuration = () => {
                 <button className="primary-button text-xs md:text-lg px-1 md:px-2">Add CPU</button>
               </td>
               <td className="text-left"></td>
-              <td className="text-left">dsfsdf</td>
-              <td className="text-left">dsfdsfsd</td>
-              <td className="text-left">sdfsdf</td>
+              <td className="text-left"></td>
+              <td className="text-left"></td>
+              <td className="text-left"></td>
             </tr>
             <tr className='border-y border-y-gray-400'>
               <td className="text-lg md:text-xl text-blue-600 font-semibold">CPU Cooler</td>

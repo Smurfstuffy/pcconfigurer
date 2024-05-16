@@ -41,7 +41,7 @@ const SignUp = () => {
         setInorrectConfirmPassword(false);
         setInorrectPasswordLength(false);
         await fetchData(
-          'http://localhost:3005/api/register',
+          'http://localhost:8080/api/register',
           'post',
           {
             username: username,

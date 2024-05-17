@@ -7,12 +7,12 @@ const getGraphicalCards = async (req, res) => {
   try {
     let query = GraphicalCard.find();
 
-    if (req.body.manufacturer) {
-      const manufacturerRegex = new RegExp(req.body.manufacturer, 'i'); 
-      query = query.where('name', manufacturerRegex); 
+    if (req.body.manufacturer && Array.isArray(req.body.manufacturer)) {
+      const manufacturerRegexes = req.body.manufacturer.map(manufacturer => new RegExp(manufacturer, 'i'));
+      query = query.where('name').in(manufacturerRegexes);
     }
-    if (req.body.chipset) {
-      query = query.where('chipset', req.body.chipset); 
+    if (req.body.chipset && Array.isArray(req.body.chipset)) {
+      query = query.where('chipset').in(req.body.chipset);
     }
     if (req.body.minMemory) {
       query = query.where('memory').gte(parseInt(req.body.minMemory)); 

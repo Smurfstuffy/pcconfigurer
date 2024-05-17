@@ -7,13 +7,9 @@ const getCaseFans = async (req, res) => {
   try {
     let query = CaseFan.find();
 
-    if (req.body.manufacturer) {
-      const manufacturerRegex = new RegExp(req.body.manufacturer, 'i');
-      query = query.where('name', manufacturerRegex);
-    }
-    if (req.body.color) {
-      const colorRegex = new RegExp(req.body.color, 'i');
-      query = query.where('color', colorRegex);
+    if (req.body.manufacturer && Array.isArray(req.body.manufacturer)) {
+      const manufacturerRegexes = req.body.manufacturer.map(manufacturer => new RegExp(manufacturer, 'i'));
+      query = query.where('name').in(manufacturerRegexes);
     }
     if (req.body.minSize) {
       query = query.where('size').gte(parseInt(req.body.minSize));

@@ -7,9 +7,9 @@ const getProcessors = async (req, res) => {
   try {
     let query = Processor.find();
 
-    if (req.body.manufacturer) {
-      const manufacturerRegex = new RegExp(req.body.manufacturer, 'i'); 
-      query = query.where('name', manufacturerRegex); 
+    if (req.body.manufacturer && Array.isArray(req.body.manufacturer)) {
+      const manufacturerRegexes = req.body.manufacturer.map(manufacturer => new RegExp(manufacturer, 'i'));
+      query = query.where('name').in(manufacturerRegexes);
     }
     if (req.body.minCoreCount) {
       query = query.where('core_count').gte(parseInt(req.body.minCoreCount)); 

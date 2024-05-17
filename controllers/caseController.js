@@ -7,20 +7,20 @@ const getCases = async (req, res) => {
   try {
     let query = Case.find();
 
-    if (req.body.manufacturer) {
-      const manufacturerRegex = new RegExp(req.body.manufacturer, 'i'); 
-      query = query.where('name', manufacturerRegex); 
+    if (req.body.manufacturer && Array.isArray(req.body.manufacturer)) {
+      const manufacturerRegexes = req.body.manufacturer.map(manufacturer => new RegExp(manufacturer, 'i'));
+      query = query.where('name').in(manufacturerRegexes);
     }
-    if (req.body.type) {
-      const typeRegex = new RegExp(req.body.type, 'i'); 
+    if (req.body.type && Array.isArray(req.body.type)) {
+      const typeRegex = req.body.type.map(type => new RegExp(type, 'i'));
       query = query.where('type', typeRegex); 
     }
-    if (req.body.formFactor) {
-      const formFactorRegex = new RegExp(req.body.formFactor, 'i'); 
+    if (req.body.formFactor && Array.isArray(req.body.formFactor)) {
+      const formFactorRegex = req.body.formFactor.map(formFactor => new RegExp(formFactor, 'i')); 
       query = query.where('type', formFactorRegex); 
     }
-    if (req.body.color) {
-      const colorRegex = new RegExp(req.body.color, 'i'); 
+    if (req.body.color && Array.isArray(req.body.color)) {
+      const colorRegex = req.body.color.map(color => new RegExp(color, 'i')); 
       query = query.where('color', colorRegex); 
     }
 

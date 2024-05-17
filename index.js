@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
-const processorRoutes = require('./routes/processor')
+const pcpartRoutes = require('./routes/pcparts')
 
 const app = express();
 
@@ -14,4 +14,4 @@ mongoose.connect('mongodb://127.0.0.1:27017/pcconfigurer')
   .catch((err) => console.log('failed to connect to db'))
 
 app.use(userRoutes);
-app.use(processorRoutes);
+app.use(pcpartRoutes);

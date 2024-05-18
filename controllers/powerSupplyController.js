@@ -2,7 +2,7 @@ const PowerSupply = require('../models/powersupply.model');
 
 const getPowerSupplies = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 24;
 
   try {
     let query = PowerSupply.find();

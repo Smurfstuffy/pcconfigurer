@@ -2,7 +2,7 @@ const Memory = require('../models/memory.model');
 
 const getMemories = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 24;
 
   try {
     let query = Memory.find();

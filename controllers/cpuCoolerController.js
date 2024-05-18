@@ -2,7 +2,7 @@ const CpuCooler = require('../models/cpuCooler.model');
 
 const getCpuCoolers = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 24;
 
   try {
     let query = CpuCooler.find();

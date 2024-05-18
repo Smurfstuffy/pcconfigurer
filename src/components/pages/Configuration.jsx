@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom"
+
 const Configuration = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col justify-center">
       <h1 className="text-center bg-indigo-900 text-white font-bold text-2xl py-2 md:text-4xl md:py-4">Configure your PC</h1>
@@ -18,7 +22,7 @@ const Configuration = () => {
             <tr className='border-y border-y-gray-400'>
               <td className="text-lg md:text-xl text-blue-600 font-semibold">CPU</td>
               <td className="text-left py-2">
-                <button className="primary-button text-xs md:text-lg px-1 md:px-2">Add CPU</button>
+                <button className="primary-button text-xs md:text-lg px-1 md:px-2" onClick={() => navigate('/products/processors')}>Add CPU</button>
               </td>
               <td className="text-left"></td>
               <td className="text-left"></td>

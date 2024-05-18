@@ -14,7 +14,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='bg-gray-200 px-10 md:px-24'><ItemsGroud /></div>
+      {/* <div className='bg-gray-200 px-10 md:px-24'><ItemsGroud /></div> */}
     </>
   );
 };

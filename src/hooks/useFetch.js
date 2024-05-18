@@ -6,7 +6,7 @@ const useFetch = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchData = async (url, method = 'get', requestBody = null, headers = {}) => {
+  const fetchData = async (url, method = 'post', requestBody = {}, headers = {}) => {
     setLoading(true);
     try {
       const response = await axios({

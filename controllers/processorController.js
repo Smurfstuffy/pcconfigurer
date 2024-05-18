@@ -1,4 +1,5 @@
 const Processor = require('../models/processor.model');
+const { getPartImageByName } =  require('./partsPriceController');
 
 const getProcessors = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -12,16 +13,16 @@ const getProcessors = async (req, res) => {
       query = query.where('name').in(manufacturerRegexes);
     }
     if (req.body.minCoreCount) {
-      query = query.where('core_count').gte(parseInt(req.body.minCoreCount)); 
+      query = query.where('core_count').gte(parseInt(req.body.minCoreCount));
     }
     if (req.body.maxCoreCount) {
-      query = query.where('core_count').lte(parseInt(req.body.maxCoreCount)); 
+      query = query.where('core_count').lte(parseInt(req.body.maxCoreCount));
     }
     if (req.body.minCoreClock) {
-      query = query.where('core_clock').gte(parseFloat(req.body.minCoreClock)); 
+      query = query.where('core_clock').gte(parseFloat(req.body.minCoreClock));
     }
     if (req.body.maxCoreClock) {
-      query = query.where('core_clock').lte(parseFloat(req.body.maxCoreClock)); 
+      query = query.where('core_clock').lte(parseFloat(req.body.maxCoreClock));
     }
     if (req.body.minTdp) {
       query = query.where('tdp').gte(parseInt(req.body.minTdp));
@@ -30,7 +31,7 @@ const getProcessors = async (req, res) => {
       query = query.where('tdp').lte(parseInt(req.body.maxTdp));
     }
     if (req.body.smt) {
-      query = query.where('smt', req.body.smt); 
+      query = query.where('smt', req.body.smt);
     }
 
     let totalProcessors;
@@ -57,4 +58,30 @@ const getProcessors = async (req, res) => {
   }
 }
 
-module.exports = {getProcessors};
+const updateCPUsWithImageUrls = async () => {
+  try {
+    // Find all CPUs from the database
+    const processors = await Processor.find();
+
+    // Iterate through each CPU and fetch its image URL
+    for (const cpu of processors) {
+      // Call getPartImageByName method to get image URL based on CPU name
+      const response = await getPartImageByName({ body: { nameToFind: cpu.name } });
+
+      // If image URL is found, update the CPU document with imgUrl field
+      if (response.data && response.data.imgUrl) {
+        cpu.imgUrl = response.data.imgUrl;
+      } else {
+        // If image URL is not found, set imgUrl to null
+        cpu.imgUrl = null;
+      }
+      // Save the updated CPU document
+      await cpu.save();
+    }
+    console.log('Image URLs added to CPUs successfully');
+  } catch (error) {
+    console.error('Error updating CPUs with image URLs:', error);
+  }
+};
+
+module.exports = { getProcessors, updateCPUsWithImageUrls };

@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
-const pcpartRoutes = require('./routes/pcparts')
+const pcpartRoutes = require('./routes/pcparts');
+const partsPriceRoutes = require('./routes/partsprices')
 
 const app = express();
 
@@ -15,3 +16,4 @@ mongoose.connect('mongodb://127.0.0.1:27017/pcconfigurer')
 
 app.use(userRoutes);
 app.use(pcpartRoutes);
+app.use(partsPriceRoutes);

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { getProcessors } = require('../controllers/processorController');
+const {getProcessors, updateCPUsWithImageUrls} = require('../controllers/processorController')
 const { getGraphicalCards } = require('../controllers/graphicalCardController');
 const { getMotherBoards } = require('../controllers/motherboardController');
 const { getCases } = require('../controllers/caseController');
@@ -13,6 +13,7 @@ const { getPowerSupplies } = require('../controllers/powerSupplyController');
 const router = express.Router();
 
 router.post('/api/processors', getProcessors);
+router.post('/api/updateprocessors', updateCPUsWithImageUrls);
 
 router.post('/api/graphicalcards', getGraphicalCards);
 

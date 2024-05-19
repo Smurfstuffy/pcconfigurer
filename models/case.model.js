@@ -10,6 +10,7 @@ const Case = new mongoose.Schema(
     side_panel: {type: String},
     external_volume: {type: Number},
     internal_35_bays: {type: Number},
+    imgUrl: {type: String},
   },
   {collection: 'cases'}
 )

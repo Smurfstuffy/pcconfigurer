@@ -8,6 +8,7 @@ const CpuCooler = new mongoose.Schema(
     noise_level: {type: mongoose.Mixed},
     color: {type: String},
     size: {type: Number},
+    imgUrl: {type: String},
   },
   {collection: 'cpucoolers'}
 )

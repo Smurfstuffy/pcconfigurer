@@ -1,4 +1,5 @@
 const Memory = require('../models/memory.model');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getMemories = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -24,28 +25,51 @@ const getMemories = async (req, res) => {
       query = query.where('modules.1').in(req.body.capacity);
     }
 
-    let totalMemories;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalMemories = await Memory.countDocuments(query);
+      totalProducts = await Memory.countDocuments(query);
     } else {
-      totalMemories = await Memory.countDocuments();
+      totalProducts = await Memory.countDocuments();
     }
 
-    const memories = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalMemories / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      memories,
+      products,
       totalPages,
       currentPage: page,
-      totalMemories,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching Memory', error });
   }
 }
 
-module.exports = { getMemories };
+const updateMemoryWithImageUrls = async () => {
+  try {
+    const memories = await Memory.find();
+
+    for (const memory of memories) {
+      console.log(memory.name)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: memory.name } });
+      console.log(response)
+      if (response) {
+        memory.imgUrl = response;
+        console.log('Image URLs added to Memory successfully');
+      } else {
+        memory.imgUrl = null;
+        console.log('Image URLs null');
+      }
+      await memory.save();
+    }
+    
+  } catch (error) {
+    console.error('Error updating Memory with image URLs:', error);
+  }
+};
+
+module.exports = { getMemories, updateMemoryWithImageUrls };

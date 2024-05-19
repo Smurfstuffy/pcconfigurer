@@ -1,4 +1,5 @@
 const CpuCooler = require('../models/cpuCooler.model');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getCpuCoolers = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -18,28 +19,51 @@ const getCpuCoolers = async (req, res) => {
       query = query.where('size').lte(parseInt(req.body.maxSize));
     }
 
-    let totalCpuCoolers;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalCpuCoolers = await CpuCooler.countDocuments(query);
+      totalProducts = await CpuCooler.countDocuments(query);
     } else {
-      totalCpuCoolers = await CpuCooler.countDocuments();
+      totalProducts = await CpuCooler.countDocuments();
     }
 
-    const cpuCoolers = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalCpuCoolers / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      cpuCoolers,
+      products,
       totalPages,
       currentPage: page,
-      totalCpuCoolers,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching CpuCoolers', error });
   }
 }
 
-module.exports = {getCpuCoolers};
+const updateCpuCoolerWithImageUrls = async () => {
+  try {
+    const coolers = await CpuCooler.find();
+
+    for (const cooler of coolers) {
+      console.log(cooler.name)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: cooler.name } });
+      console.log(response)
+      if (response) {
+        cooler.imgUrl = response;
+        console.log('Image URLs added to CpuCooler successfully');
+      } else {
+        cooler.imgUrl = null;
+        console.log('Image URLs null');
+      }
+      await cooler.save();
+    }
+    
+  } catch (error) {
+    console.error('Error updating CpuCooler with image URLs:', error);
+  }
+};
+
+module.exports = {getCpuCoolers, updateCpuCoolerWithImageUrls};

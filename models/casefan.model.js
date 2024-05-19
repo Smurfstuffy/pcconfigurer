@@ -10,6 +10,7 @@ const CaseFan = new mongoose.Schema(
     airflow: {type: mongoose.Mixed},
     noise_level: {type: mongoose.Mixed},
     pwm: {type: Boolean},
+    imgUrl: {type: String},
   },
   {collection: 'casefans'}
 )

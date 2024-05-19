@@ -1,4 +1,5 @@
 const PowerSupply = require('../models/powersupply.model');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getPowerSupplies = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -24,28 +25,52 @@ const getPowerSupplies = async (req, res) => {
       query = query.where('wattage').lte(parseInt(req.body.maxWattage)); 
     }
 
-    let totalPowerSupplies;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalPowerSupplies = await PowerSupply.countDocuments(query);
+      totalProducts = await PowerSupply.countDocuments(query);
     } else {
-      totalPowerSupplies = await PowerSupply.countDocuments();
+      totalProducts = await PowerSupply.countDocuments();
     }
 
-    const powerSupplies = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalPowerSupplies / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      powerSupplies,
+      products,
       totalPages,
       currentPage: page,
-      totalPowerSupplies,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching PowerSupplies', error });
   }
 }
 
-module.exports = { getPowerSupplies };
+const updatePowerSupplyWithImageUrls = async () => {
+  try {
+    const powerSupplies = await PowerSupply.find();
+
+    for (const powerSupply of powerSupplies) {
+      const nameToFind = powerSupply.name.replace(/\s*\(.*?\)\s*/g, '').trim();
+      console.log(nameToFind)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: nameToFind } });
+      console.log(response)
+      if (response) {
+        powerSupply.imgUrl = response;
+        console.log('Image URLs added to PowerSupply successfully');
+      } else {
+        powerSupply.imgUrl = null;
+        console.log('Image URLs null');
+      }
+      await powerSupply.save();
+    }
+    
+  } catch (error) {
+    console.error('Error updating PowerSupplies with image URLs:', error);
+  }
+};
+
+module.exports = { getPowerSupplies, updatePowerSupplyWithImageUrls };

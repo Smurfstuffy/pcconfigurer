@@ -9,7 +9,8 @@ const GraphicCard = new mongoose.Schema(
     core_clock: {type: Number},
     boost_clock: {type: Number},
     color: {type: String},
-    length: {type: Boolean},
+    length: {type: Number},
+    imgUrl: {type: String},
   },
   {collection: 'gpus'}
 )

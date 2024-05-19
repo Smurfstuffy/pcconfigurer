@@ -1,5 +1,5 @@
 const Processor = require('../models/processor.model');
-const { getPartImageByName } =  require('./partsPriceController');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getProcessors = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -34,24 +34,24 @@ const getProcessors = async (req, res) => {
       query = query.where('smt', req.body.smt);
     }
 
-    let totalProcessors;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalProcessors = await Processor.countDocuments(query);
+      totalProducts = await Processor.countDocuments(query);
     } else {
-      totalProcessors = await Processor.countDocuments();
+      totalProducts = await Processor.countDocuments();
     }
 
-    const processors = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalProcessors / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      processors,
+      products,
       totalPages,
       currentPage: page,
-      totalProcessors,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching Processors', error });
@@ -60,25 +60,21 @@ const getProcessors = async (req, res) => {
 
 const updateCPUsWithImageUrls = async () => {
   try {
-    // Find all CPUs from the database
     const processors = await Processor.find();
 
-    // Iterate through each CPU and fetch its image URL
     for (const cpu of processors) {
-      // Call getPartImageByName method to get image URL based on CPU name
-      const response = await getPartImageByName({ body: { nameToFind: cpu.name } });
-
-      // If image URL is found, update the CPU document with imgUrl field
-      if (response.data && response.data.imgUrl) {
-        cpu.imgUrl = response.data.imgUrl;
+      console.log(cpu.name)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: cpu.name } });
+      console.log(response)
+      if (response) {
+        cpu.imgUrl = response;
+        console.log('Image URLs added to CPUs successfully');
       } else {
-        // If image URL is not found, set imgUrl to null
         cpu.imgUrl = null;
+        console.log('Image URLs null');
       }
-      // Save the updated CPU document
       await cpu.save();
-    }
-    console.log('Image URLs added to CPUs successfully');
+    }   
   } catch (error) {
     console.error('Error updating CPUs with image URLs:', error);
   }

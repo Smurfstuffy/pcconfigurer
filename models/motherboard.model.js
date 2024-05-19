@@ -9,6 +9,7 @@ const MotherBoard = new mongoose.Schema(
     max_memory: {type: Number},
     memory_slots: {type: Number},
     color: {type: String},
+    imgUrl: {type: String},
   },
   {collection: 'motherboards'}
 )

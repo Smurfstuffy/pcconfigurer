@@ -9,6 +9,7 @@ const PowerSupply = new mongoose.Schema(
     wattage: {type: Number},
     modular: {type: mongoose.Mixed},
     color: {type: String},
+    imgUrl: {type: String},
   },
   {collection: 'powersuplies'}
 )

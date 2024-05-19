@@ -1,4 +1,5 @@
 const MotherBoard = require('../models/motherboard.model');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getMotherBoards = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -31,28 +32,51 @@ const getMotherBoards = async (req, res) => {
       query = query.where('memory_slots').lte(parseInt(req.body.maxMemorySlots)); 
     }
 
-    let totalMotherBoards;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalMotherBoards = await MotherBoard.countDocuments(query);
+      totalProducts = await MotherBoard.countDocuments(query);
     } else {
-      totalMotherBoards = await MotherBoard.countDocuments();
+      totalProducts = await MotherBoard.countDocuments();
     }
 
-    const motherBoards = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalMotherBoards / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      motherBoards,
+      products,
       totalPages,
       currentPage: page,
-      totalMotherBoards,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching MotherBoards', error });
   }
 }
 
-module.exports = {getMotherBoards};
+const updateMotherboardWithImageUrls = async () => {
+  try {
+    const motherboards = await MotherBoard.find();
+
+    for (const motherboard of motherboards) {
+      console.log(motherboard.name)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: motherboard.name } });
+      console.log(response)
+      if (response) {
+        motherboard.imgUrl = response;
+        console.log('Image URLs added to Motherboard successfully');
+      } else {
+        motherboard.imgUrl = null;
+        console.log('Image URLs null');
+      }
+      await motherboard.save();
+    }
+    
+  } catch (error) {
+    console.error('Error updating Motherboard with image URLs:', error);
+  }
+};
+
+module.exports = {getMotherBoards, updateMotherboardWithImageUrls};

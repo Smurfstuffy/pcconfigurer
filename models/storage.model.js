@@ -10,6 +10,7 @@ const Storage = new mongoose.Schema(
     cache: {type: Number},
     form_factor: {type: mongoose.Mixed},
     interface: {type: String},
+    imgUrl: {type: String},
   },
   {collection: 'harddrives'}
 )

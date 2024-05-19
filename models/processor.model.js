@@ -10,6 +10,7 @@ const Processor = new mongoose.Schema(
     tdp: {type: Number},
     graphics: {type: String},
     smt: {type: Boolean},
+    imgUrl: {type: String},
   },
   {collection: 'cpus'}
 )

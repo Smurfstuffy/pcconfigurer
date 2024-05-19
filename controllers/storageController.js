@@ -1,4 +1,5 @@
 const Storage = require('../models/storage.model');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getStorages = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -27,28 +28,51 @@ const getStorages = async (req, res) => {
       query = query.where('interface').in(req.body.interface);
     }
 
-    let totalStorages;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalStorages = await Storage.countDocuments(query);
+      totalProducts = await Storage.countDocuments(query);
     } else {
-      totalStorages = await Storage.countDocuments();
+      totalProducts = await Storage.countDocuments();
     }
 
-    const storages = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalStorages / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      storages,
+      products,
       totalPages,
       currentPage: page,
-      totalStorages,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching Storages', error });
   }
 }
 
-module.exports = { getStorages };
+const updateStoragesWithImageUrls = async () => {
+  try {
+    const storages = await Storage.find();
+
+    for (const storage of storages) {
+      console.log(storage.name)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: storage.name } });
+      console.log(response)
+      if (response) {
+        storage.imgUrl = response;
+        console.log('Image URLs added to Storage successfully');
+      } else {
+        storage.imgUrl = null;
+        console.log('Image URLs null');
+      }
+      await storage.save();
+    }
+    
+  } catch (error) {
+    console.error('Error updating Storages with image URLs:', error);
+  }
+};
+
+module.exports = { getStorages, updateStoragesWithImageUrls };

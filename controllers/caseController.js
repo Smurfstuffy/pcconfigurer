@@ -1,4 +1,5 @@
 const Case = require('../models/case.model');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getCases = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -24,28 +25,51 @@ const getCases = async (req, res) => {
       query = query.where('color', colorRegex); 
     }
 
-    let totalCases;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalCases = await Case.countDocuments(query);
+      totalProducts = await Case.countDocuments(query);
     } else {
-      totalCases = await Case.countDocuments();
+      totalProducts = await Case.countDocuments();
     }
 
-    const cases = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalCases / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      cases,
+      products,
       totalPages,
       currentPage: page,
-      totalCases,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching Cases', error });
   }
 }
 
-module.exports = {getCases};
+const updateCasesWithImageUrls = async () => {
+  try {
+    const cases = await Case.find();
+
+    for (const pcCase of cases) {
+      console.log(pcCase.name)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: pcCase.name } });
+      console.log(response)
+      if (response) {
+        pcCase.imgUrl = response;
+        console.log('Image URLs added to Case successfully');
+      } else {
+        pcCase.imgUrl = null;
+        console.log('Image URLs null');
+      }
+      await pcCase.save();
+    }
+    
+  } catch (error) {
+    console.error('Error updating Case with image URLs:', error);
+  }
+};
+
+module.exports = {getCases, updateCasesWithImageUrls};

@@ -1,4 +1,5 @@
 const GraphicalCard = require('../models/graphicCard.model');
+const { getPartImageByNameFunc } =  require('./partsPriceController');
 
 const getGraphicalCards = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -33,28 +34,59 @@ const getGraphicalCards = async (req, res) => {
       query = query.where('length').lte(parseInt(req.body.maxLength));
     }
 
-    let totalGraphicalCards;
+    let totalProducts;
     if (Object.keys(req.body).length > 0) {
-      totalGraphicalCards = await GraphicalCard.countDocuments(query);
+      totalProducts = await GraphicalCard.countDocuments(query);
     } else {
-      totalGraphicalCards = await GraphicalCard.countDocuments();
+      totalProducts = await GraphicalCard.countDocuments();
     }
 
-    const graphicalCards = await query
+    const products = await query
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const totalPages = Math.ceil(totalGraphicalCards / limit);
+    const totalPages = Math.ceil(totalProducts / limit);
 
     res.json({
-      graphicalCards,
+      products,
       totalPages,
       currentPage: page,
-      totalGraphicalCards,
+      totalProducts,
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching GraphicalCards', error });
   }
 }
 
-module.exports = {getGraphicalCards};
+const updateGpuWithImageUrls = async () => {
+  try {
+    const graphicalCards = await GraphicalCard.find();
+
+    for (const graphicalCard of graphicalCards) {
+      if (!graphicalCard.name.includes(graphicalCard.chipset)) {
+        const firstSpaceIndex = graphicalCard.name.indexOf(' ');
+        if (firstSpaceIndex !== -1) {
+          graphicalCard.name = graphicalCard.name.slice(0, firstSpaceIndex + 1) + graphicalCard.chipset + ' ' + graphicalCard.name.slice(firstSpaceIndex + 1);
+        } else {
+          graphicalCard.name = graphicalCard.chipset + ' ' + graphicalCard.name;
+        }
+      }
+      console.log(graphicalCard.name)
+      const response = await getPartImageByNameFunc({ body: { nameToFind: graphicalCard.name } });
+      console.log(response)
+      if (response) {
+        graphicalCard.imgUrl = response;
+        console.log('Image URLs added to GraphicalCard successfully');
+      } else {
+        graphicalCard.imgUrl = null;
+        console.log('Image URLs null');
+      }
+      await graphicalCard.save();
+    }
+    
+  } catch (error) {
+    console.error('Error updating GraphicalCard with image URLs:', error);
+  }
+};
+
+module.exports = {getGraphicalCards, updateGpuWithImageUrls};

@@ -1,4 +1,5 @@
 const express = require('express');
+const requireAuth = require('../middleware/requireAuth');
 
 const {getProcessors, updateCPUsWithImageUrls, getProcessorById} = require('../controllers/processorController')
 const { getGraphicalCards, updateGpuWithImageUrls, getGraphicalCardById } = require('../controllers/graphicalCardController');
@@ -11,6 +12,8 @@ const { getMemories, updateMemoryWithImageUrls, getMemoryById } = require('../co
 const { getPowerSupplies, updatePowerSupplyWithImageUrls, getPowerSupplyById } = require('../controllers/powerSupplyController');
 
 const router = express.Router();
+
+router.use(requireAuth);
 
 router.post('/api/processors', getProcessors);
 router.post('/api/processor', getProcessorById);

@@ -3,26 +3,33 @@ import ItemsGroupCard from "./ItemsGroupCard";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Pagination from "./Pagination";
+import { useUserContext } from "../../hooks/UserContex";
 
 const ItemsGroup = ({ url }) => {
   const [page, setPage] = useState(1);
   const { loading, data, error, fetchData } = useFetch();
+  const { user } = useUserContext();
 
   useEffect(() => {
-    (async () => {
-      try {
-        await fetchData(url + `?page=${page}`);
-      } catch (error) {
-        console.error('Error occurred during fetching:', error);
-      }
-    })();
-  }, [page])
+    if (user) {
+      (async () => {
+        try {
+          await fetchData(url + `?page=${page}`,
+            'post',
+            {},
+            {
+              'Authorization': 'Bearer ' + user.token,
+            });
+        } catch (error) {
+          console.error('Error occurred during fetching:', error);
+        }
+      })();
+    }
+  }, [page, user])
 
   if (error) return <div>{error}</div>
 
   if (loading) return <div>Loading...</div>
-
-  console.log(data)
 
   return (
     <>
@@ -32,7 +39,7 @@ const ItemsGroup = ({ url }) => {
           <Card name={product.name} id={product._id} key={product._id} imgUrl={product.imgUrl} />
         ))}
       </div>
-      {data && <Pagination page={page} setPage={setPage} totalPages={data.totalPages}/>}
+      {data && <Pagination page={page} setPage={setPage} totalPages={data.totalPages} />}
     </>
   )
 }

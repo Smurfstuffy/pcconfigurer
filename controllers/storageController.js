@@ -23,10 +23,12 @@ const getStorages = async (req, res) => {
       query = query.where('type').in(req.body.type);
     }
     if (req.body.formFactor && Array.isArray(req.body.formFactor)) {
-      query = query.where('form_factor').in(req.body.formFactor);
+      const formFactorRegexes = req.body.formFactor.map(formFactor => new RegExp(formFactor, 'i'));
+      query = query.where('form_factor').in(formFactorRegexes);
     }
     if (req.body.interface && Array.isArray(req.body.interface)) {
-      query = query.where('interface').in(req.body.interface);
+      const interfaceRegexes = req.body.interface.map(interface => new RegExp(interface, 'i'));
+      query = query.where('interface').in(interfaceRegexes);
     }
 
     let totalProducts;

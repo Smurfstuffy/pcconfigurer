@@ -3,7 +3,7 @@ import useFetch from "../../hooks/useFetch";
 import { useUserContext } from "../../hooks/UserContex";
 import { useNavigate } from "react-router-dom";
 
-import backgroundImage from './../../img/PC_Components_2.jpg'
+import backgroundImage from './../../img/background/PC_Components_2.jpg'
 
 const SignUp = () => {
   const [username, setUsername] = useState('');

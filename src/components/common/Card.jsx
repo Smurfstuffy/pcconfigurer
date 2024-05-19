@@ -1,31 +1,18 @@
 import { useLocation } from "react-router-dom"
-import useImage from "../../hooks/useImage";
-import { useEffect, useState } from "react";
-import useFetch from "../../hooks/useFetch";
+import getImageGeneric from "../../functions/getImageGeneric";
 
-const Card = ({ name, id }) => {
-  const { loading, data, error, fetchData } = useFetch();
-  
-  useEffect(() => {
-    (async () => {
-      try {
-        await fetchData('http://localhost:8080/api/getpartspricebyname', 'post', {nameToFind: name});
-      } catch (error) {
-        console.error('Error occurred during fetching:', error);
-      }
-    })();
-  }, [])
+const Card = ({ name, id, imgUrl }) => {
+  const location = useLocation()
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (!imgUrl) {
+    imgUrl = getImageGeneric(name, location.pathname);
   }
 
   return (
-    <div class="card hover:shadow-2xl hover:cursor-pointer">
-      {error && <div>{error.message}</div>}
-      {data && <img src={data.imgUrl} alt={name} class="h-38 md:h-56  w-full object-cover" />}
-      <div class="m-4 text-center">
-        <span class="font-bold text-base md:text-lg">{name}</span>
+    <div className="card hover:shadow-2xl hover:cursor-pointer">
+      <img src={imgUrl} alt={name} className="h-37 md:h-64  w-full object-cover" />
+      <div className="m-4 text-center">
+        <span className="font-bold text-base md:text-lg">{name}</span>
       </div>
     </div>
   )

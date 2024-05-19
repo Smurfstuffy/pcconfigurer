@@ -28,8 +28,8 @@ const ItemsGroup = ({ url }) => {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4">
         <ItemsGroupCard />
-        {data && data.processors.map((processor) => (
-          <Card name={processor.name} id={processor._id} key={processor._id} />
+        {data && data.products.map((product) => (
+          <Card name={product.name} id={product._id} key={product._id} imgUrl={product.imgUrl} />
         ))}
       </div>
       {data && <Pagination page={page} setPage={setPage} totalPages={data.totalPages}/>}

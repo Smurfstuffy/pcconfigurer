@@ -1,5 +1,5 @@
 import ItemsGroud from '../common/ItemsGroup';
-import backgroundImage from '../../img/PC_Components.jpg'
+import backgroundImage from '../../img/background/PC_Components.jpg'
 
 const Home = () => {
   return (

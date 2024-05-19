@@ -1,5 +1,6 @@
 const Storage = require('../models/storage.model');
-const { getPartImageByNameFunc } =  require('./partsPriceController');
+const { getPartImageByNameFunc } = require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getStorages = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -52,6 +53,26 @@ const getStorages = async (req, res) => {
   }
 }
 
+const getStorageById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await Storage.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Storage not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching storage', error });
+  }
+}
+
 const updateStoragesWithImageUrls = async () => {
   try {
     const storages = await Storage.find();
@@ -69,10 +90,10 @@ const updateStoragesWithImageUrls = async () => {
       }
       await storage.save();
     }
-    
+
   } catch (error) {
     console.error('Error updating Storages with image URLs:', error);
   }
 };
 
-module.exports = { getStorages, updateStoragesWithImageUrls };
+module.exports = { getStorages, getStorageById, updateStoragesWithImageUrls };

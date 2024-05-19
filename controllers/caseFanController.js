@@ -1,5 +1,6 @@
 const CaseFan = require('../models/casefan.model');
 const { getPartImageByNameFunc } =  require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getCaseFans = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -46,6 +47,26 @@ const getCaseFans = async (req, res) => {
   }
 }
 
+const getCaseFanById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await CaseFan.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Case Fan not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Case Fan', error });
+  }
+}
+
 const updateCaseFanWithImageUrls = async () => {
   try {
     const caseFans = await CaseFan.find();
@@ -69,4 +90,4 @@ const updateCaseFanWithImageUrls = async () => {
   }
 };
 
-module.exports = { getCaseFans, updateCaseFanWithImageUrls };
+module.exports = { getCaseFans, getCaseFanById, updateCaseFanWithImageUrls };

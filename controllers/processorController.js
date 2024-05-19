@@ -1,5 +1,6 @@
 const Processor = require('../models/processor.model');
 const { getPartImageByNameFunc } =  require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getProcessors = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -58,6 +59,26 @@ const getProcessors = async (req, res) => {
   }
 }
 
+const getProcessorById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await Processor.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Processor not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Processor', error });
+  }
+}
+
 const updateCPUsWithImageUrls = async () => {
   try {
     const processors = await Processor.find();
@@ -80,4 +101,4 @@ const updateCPUsWithImageUrls = async () => {
   }
 };
 
-module.exports = { getProcessors, updateCPUsWithImageUrls };
+module.exports = { getProcessors, getProcessorById, updateCPUsWithImageUrls };

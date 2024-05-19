@@ -1,5 +1,6 @@
 const GraphicalCard = require('../models/graphicCard.model');
 const { getPartImageByNameFunc } =  require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getGraphicalCards = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -58,6 +59,26 @@ const getGraphicalCards = async (req, res) => {
   }
 }
 
+const getGraphicalCardById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await GraphicalCard.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'GraphicalCard not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching GraphicalCard', error });
+  }
+}
+
 const updateGpuWithImageUrls = async () => {
   try {
     const graphicalCards = await GraphicalCard.find();
@@ -89,4 +110,4 @@ const updateGpuWithImageUrls = async () => {
   }
 };
 
-module.exports = {getGraphicalCards, updateGpuWithImageUrls};
+module.exports = {getGraphicalCards, getGraphicalCardById, updateGpuWithImageUrls};

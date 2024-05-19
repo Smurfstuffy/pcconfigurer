@@ -1,5 +1,6 @@
 const CpuCooler = require('../models/cpuCooler.model');
 const { getPartImageByNameFunc } =  require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getCpuCoolers = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -43,6 +44,26 @@ const getCpuCoolers = async (req, res) => {
   }
 }
 
+const getCpuCoolerById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await CpuCooler.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'CPU Cooler not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching CPU Cooler', error });
+  }
+}
+
 const updateCpuCoolerWithImageUrls = async () => {
   try {
     const coolers = await CpuCooler.find();
@@ -66,4 +87,4 @@ const updateCpuCoolerWithImageUrls = async () => {
   }
 };
 
-module.exports = {getCpuCoolers, updateCpuCoolerWithImageUrls};
+module.exports = {getCpuCoolers, getCpuCoolerById, updateCpuCoolerWithImageUrls};

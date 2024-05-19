@@ -1,5 +1,6 @@
 const Case = require('../models/case.model');
 const { getPartImageByNameFunc } =  require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getCases = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -49,6 +50,26 @@ const getCases = async (req, res) => {
   }
 }
 
+const getCaseById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await Case.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Case  not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Case', error });
+  }
+}
+
 const updateCasesWithImageUrls = async () => {
   try {
     const cases = await Case.find();
@@ -72,4 +93,4 @@ const updateCasesWithImageUrls = async () => {
   }
 };
 
-module.exports = {getCases, updateCasesWithImageUrls};
+module.exports = {getCases, getCaseById, updateCasesWithImageUrls};

@@ -1,5 +1,6 @@
 const PowerSupply = require('../models/powersupply.model');
 const { getPartImageByNameFunc } =  require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getPowerSupplies = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -49,6 +50,26 @@ const getPowerSupplies = async (req, res) => {
   }
 }
 
+const getPowerSupplyById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await PowerSupply.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Power Supply not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Power Supply', error });
+  }
+}
+
 const updatePowerSupplyWithImageUrls = async () => {
   try {
     const powerSupplies = await PowerSupply.find();
@@ -73,4 +94,4 @@ const updatePowerSupplyWithImageUrls = async () => {
   }
 };
 
-module.exports = { getPowerSupplies, updatePowerSupplyWithImageUrls };
+module.exports = { getPowerSupplies, getPowerSupplyById, updatePowerSupplyWithImageUrls };

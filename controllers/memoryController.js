@@ -1,5 +1,6 @@
 const Memory = require('../models/memory.model');
 const { getPartImageByNameFunc } =  require('./partsPriceController');
+const mongoose = require('mongoose');
 
 const getMemories = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -49,6 +50,26 @@ const getMemories = async (req, res) => {
   }
 }
 
+const getMemoryById = async (req, res) => {
+  const { id } = req.body; 
+  console.log(id);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format' });
+    }
+
+    const product = await Memory.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Memory not found' });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching Memory', error });
+  }
+}
+
 const updateMemoryWithImageUrls = async () => {
   try {
     const memories = await Memory.find();
@@ -72,4 +93,4 @@ const updateMemoryWithImageUrls = async () => {
   }
 };
 
-module.exports = { getMemories, updateMemoryWithImageUrls };
+module.exports = { getMemories, getMemoryById, updateMemoryWithImageUrls };

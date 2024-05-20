@@ -5,12 +5,13 @@ import {
   RouterProvider,
   Navigate
 } from 'react-router-dom';
-import Home from './components/pages/Home';
+import Home from './components/pages/home/Home';
 import Layout from './components/layouts/Layout';
 import SignIn from './components/pages/SignIn';
 import SignUp from './components/pages/SignUp';
 import Configuration from './components/pages/Configuration';
-import { UserProvider } from './hooks/UserContex';
+import UsersBuilds from './components/pages/UsersBuilds';
+import { useUserContext } from './hooks/UserContex';
 
 import Processors from './components/pages/products/Processors';
 import CaseFans from './components/pages/products/CaseFans';
@@ -31,56 +32,59 @@ import Memory from './components/pages/product/Memory';
 import MotherBoard from './components/pages/product/Motherboard';
 import PowerSupply from './components/pages/product/PowerSupply';
 import Storage from './components/pages/product/Storage';
-
+import Motherboard from './components/pages/product/Motherboard';
 
 const App = () => {
+  const {user} = useUserContext();
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
         <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='configuration' element={<Configuration />}/>
+          <Route index element={user ? <Home /> : <Navigate to='/signin' />} />
+          <Route path='configuration' element={user ? <Configuration /> : <Navigate to='/signin' />} />
+          <Route path='usersbuilds' element={user ? <UsersBuilds /> : <Navigate to='/signin' />} />
 
-          <Route path='products/processors' element={<Processors />}/>
-          <Route path='products/processors/*' element={<Processor />}/>
+          <Route path='/products'>
+            <Route path='processors' element={user ? <Processors /> : <Navigate to='/signin' />} />
+            <Route path='processors/*' element={user ? <Processor /> : <Navigate to='/signin' />} />
 
-          <Route path='products/casefans' element={<CaseFans />}/>
-          <Route path='products/casefans/*' element={<CaseFan />}/>
+            <Route path='casefans' element={user ? <CaseFans /> : <Navigate to='/signin' />} />
+            <Route path='casefans/*' element={user ? <CaseFan /> : <Navigate to='/signin' />} />
 
-          <Route path='products/cases' element={<Cases />}/>
-          <Route path='products/cases/*' element={<Case />}/>
+            <Route path='cases' element={user ? <Cases /> : <Navigate to='/signin' />} />
+            <Route path='cases/*' element={user ? <Case /> : <Navigate to='/signin' />} />
 
-          <Route path='products/graphicalcards' element={<GraphicalCards />}/>
-          <Route path='products/graphicalcards/*' element={<GraphicalCard />}/>
+            <Route path='graphicalcards' element={user ? <GraphicalCards /> : <Navigate to='/signin' />} />
+            <Route path='graphicalcards/*' element={user ? <GraphicalCard /> : <Navigate to='/signin' />} />
 
-          <Route path='products/cpucoolers' element={<CpuCoolers />}/>
-          <Route path='products/cpucoolers/*' element={<CpuCooler />}/>
-          
-          <Route path='products/memories' element={<Memories />}/>
-          <Route path='products/memories/*' element={<Memory />}/>
+            <Route path='cpucoolers' element={user ? <CpuCoolers /> : <Navigate to='/signin' />} />
+            <Route path='cpucoolers/*' element={user ? <CpuCooler /> : <Navigate to='/signin' />} />
 
-          <Route path='products/motherboards' element={<MotherBoards />}/>
-          <Route path='products/motherboards/*' element={<MotherBoard />}/>
+            <Route path='memories' element={user ? <Memories /> : <Navigate to='/signin' />} />
+            <Route path='memories/*' element={user ? <Memory /> : <Navigate to='/signin' />} />
 
-          <Route path='products/powersupplies' element={<PowerSupplies />}/>
-          <Route path='products/powersupplies/*' element={<PowerSupply />}/>
+            <Route path='motherboards' element={user ? <MotherBoards /> : <Navigate to='/signin' />} />
+            <Route path='motherboards/*' element={user ? <Motherboard /> : <Navigate to='/signin' />}/>
 
-          <Route path='products/storages' element={<Storages />}/>
-          <Route path='products/storages/*' element={<Storage />}/>
+            <Route path='powersupplies' element={user ? <PowerSupplies /> : <Navigate to='/signin' />} />
+            <Route path='powersupplies/*' element={user ? <PowerSupply /> : <Navigate to='/signin' />} />
+
+            <Route path='storages' element={user ? <Storages /> : <Navigate to='/signin' />} />
+            <Route path='storages/*' element={user ? <Storage /> : <Navigate to='/signin' />} />
+
+          </Route>
+
+
         </Route>
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/signin' element={<SignIn />} />
+        <Route path='/signup' element={!user ? <SignUp /> : <Navigate to='/' />}  />
+        <Route path='/signin' element={!user ? <SignIn /> : <Navigate to='/' />} />
       </Route>
     )
   )
 
 
-  return (
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
-  )
+  return <RouterProvider router={router} />  
 }
 
 export default App

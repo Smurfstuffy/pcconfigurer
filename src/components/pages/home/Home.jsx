@@ -1,7 +1,8 @@
-import ItemsGroud from '../common/ItemsGroup';
-import backgroundImage from '../../img/background/PC_Components.jpg'
+import backgroundImage from '../../../img/background/PC_Components.jpg'
+import HomeComponents from './HomeComponents';
 
 const Home = () => {
+
   return (
     <>
       <div className="relative">
@@ -14,7 +15,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* <div className='bg-gray-200 px-10 md:px-24'><ItemsGroud /></div> */}
+      <div className='bg-gray-200 px-10 md:px-24'><HomeComponents /></div>
     </>
   );
 };

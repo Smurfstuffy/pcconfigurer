@@ -6,9 +6,9 @@ const Card = ({ name, id, imgUrl }) => {
   const location = useLocation();
   const navigate = useNavigate(); 
 
-  if (!imgUrl) {
-    imgUrl = getImageGeneric(name, location.pathname);
-  }
+  // if (!imgUrl) {
+  //   imgUrl = getImageGeneric(name, location.pathname);
+  // }
 
   return (
     <div className="card hover:shadow-2xl hover:cursor-pointer" onClick={() => navigate(`${id}`)}>

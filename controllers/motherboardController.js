@@ -20,6 +20,9 @@ const getMotherBoards = async (req, res) => {
     if (req.body.socket && Array.isArray(req.body.socket)) {
       query = query.where('socket').in(req.body.socket);
     }
+    if (req.body.formFactor && Array.isArray(req.body.formFactor)) {
+      query = query.where('form_factor').in(req.body.formFactor);
+    }
     if (req.body.minMemory) {
       query = query.where('max_memory').gte(parseInt(req.body.minMemory)); 
     }

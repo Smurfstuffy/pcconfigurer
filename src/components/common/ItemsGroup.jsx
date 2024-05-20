@@ -5,7 +5,7 @@ import useFetch from "../../hooks/useFetch";
 import Pagination from "./Pagination";
 import { useUserContext } from "../../hooks/UserContex";
 
-const ItemsGroup = ({ url }) => {
+const ItemsGroup = ({ url, body }) => {
   const [page, setPage] = useState(1);
   const { loading, data, error, fetchData } = useFetch();
   const { user } = useUserContext();
@@ -16,7 +16,7 @@ const ItemsGroup = ({ url }) => {
         try {
           await fetchData(url + `?page=${page}`,
             'post',
-            {},
+            body,
             {
               'Authorization': 'Bearer ' + user.token,
             });
@@ -25,7 +25,7 @@ const ItemsGroup = ({ url }) => {
         }
       })();
     }
-  }, [page, user])
+  }, [page, user, body])
 
   if (error) return <div>{error}</div>
 

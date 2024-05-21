@@ -2,9 +2,48 @@ import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import PCConfig from "../../store/PCConfig";
 import { isObjEmpty } from "../../functions/isObjEmpty";
+import { useState } from "react";
+import { useUserContext } from "../../hooks/UserContex";
+import useFetch from "../../hooks/useFetch";
 
 const Configuration = observer(() => {
   const navigate = useNavigate();
+  const [pcBuildName, setPcBuildName] = useState('');
+  const { user } = useUserContext();
+  const { fetchData } = useFetch();
+
+  const handleCreateBuild = async (e) => {
+    e.preventDefault();
+    if (user) {
+      console.log('dsfsdfsd')
+      const body = {
+        user: user.username,
+        buildName: pcBuildName,
+        cpu: PCConfig.config.processor,
+        cooler: PCConfig.config.cooler,
+        motherboard: PCConfig.config.motherboard,
+        gpu: PCConfig.config.graphicalCard,
+        memory: PCConfig.config.memory,
+        storage: PCConfig.config.storage,
+        powerSupply: PCConfig.config.powerSupply,
+        fan: PCConfig.config.fan,
+        pcCase: PCConfig.config.case
+      }
+      
+        try {
+          await fetchData(
+            'http://localhost:8080/api/createpcbuild',
+            'post',
+            body,
+            {
+              'Authorization': 'Bearer ' + user.token,
+            });
+        } catch (error) {
+          console.error('Error occurred during fetching:', error);
+        }
+
+    }
+  }
 
   return (
     <div className="flex flex-col justify-center">
@@ -145,10 +184,10 @@ const Configuration = observer(() => {
                 {isObjEmpty(PCConfig.config.case) ?
                   <button className="primary-button text-xs md:text-lg px-1 md:px-8" onClick={() => navigate('/products/cases')}>Add Case</button> :
                   <div className="flex items-center justify-between">
-                  <p className="text-base md:text-lg text-gray-600 font-semibold hover:text-blue-600 hover:cursor-pointer"
-                    onClick={() => navigate(`/products/cases/${PCConfig.config.case._id}`)}>
-                    {PCConfig.config.case.name}
-                  </p>
+                    <p className="text-base md:text-lg text-gray-600 font-semibold hover:text-blue-600 hover:cursor-pointer"
+                      onClick={() => navigate(`/products/cases/${PCConfig.config.case._id}`)}>
+                      {PCConfig.config.case.name}
+                    </p>
                     <button className="neutral-button text-xs md:text-lg px-1 md:px-8 md:ml-8" onClick={() => PCConfig.removeCase()}>Remove Case</button>
                   </div>
                 }
@@ -157,6 +196,25 @@ const Configuration = observer(() => {
           </tbody>
         </table>
       </div>
+      {
+        (
+          !isObjEmpty(PCConfig.config.case) &&
+          !isObjEmpty(PCConfig.config.cooler) &&
+          !isObjEmpty(PCConfig.config.fan) &&
+          !isObjEmpty(PCConfig.config.graphicalCard) &&
+          !isObjEmpty(PCConfig.config.memory) &&
+          !isObjEmpty(PCConfig.config.motherboard) &&
+          !isObjEmpty(PCConfig.config.powerSupply) &&
+          !isObjEmpty(PCConfig.config.processor) &&
+          !isObjEmpty(PCConfig.config.storage)
+        ) ?
+          <div className="flex flex-col px-1 md:px-8 items-center">
+            <input type="text" placeholder='PC Build Name' className='input mt-2 md:w-1/3' value={pcBuildName} onChange={e => setPcBuildName(e.target.value)} />
+            <button className="primary-button mt-2 md:w-1/3" onClick={handleCreateBuild}>Publish my PC Build</button>
+          </div>
+          :
+          <></>
+      }
     </div>
   )
 })

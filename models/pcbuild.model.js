@@ -10,7 +10,7 @@ const PcBuild = new mongoose.Schema(
   {
     buildName: { type: String, required: true },
     user: { type: String, required: true },
-    cpu: { type: Schema.Types.ObjectId, ref: 'cpus', required: true }, // Change type to ObjectId and specify ref
+    cpu: { type: Schema.Types.ObjectId, ref: 'cpus', required: true }, 
     cooler: { type: Schema.Types.ObjectId, ref: 'cpucoolers', required: true },
     motherboard: { type: Schema.Types.ObjectId, ref: 'motherboards', required: true },
     gpu: { type: Schema.Types.ObjectId, ref: 'gpus', required: true },

@@ -11,7 +11,7 @@ const { getStorages, getStorageById, updateStoragesWithImageUrls } = require('..
 const { getMemories, updateMemoryWithImageUrls, getMemoryById } = require('../controllers/memoryController');
 const { getPowerSupplies, updatePowerSupplyWithImageUrls, getPowerSupplyById } = require('../controllers/powerSupplyController');
 
-const {createPCBuild} = require('../controllers/pcBuildController');
+const {createPCBuild, getAllPCBuilds, getPCBuildById} = require('../controllers/pcBuildController');
 
 const router = express.Router();
 
@@ -54,5 +54,7 @@ router.post('/api/powersupply', getPowerSupplyById);
 router.post('/api/updatepowersupplies', updatePowerSupplyWithImageUrls);
 
 router.post('/api/createpcbuild', createPCBuild);
+router.get('/api/getallpcbuilds', getAllPCBuilds);
+router.post('/api/getpcbuildbyid', getPCBuildById);
 
 module.exports = router;

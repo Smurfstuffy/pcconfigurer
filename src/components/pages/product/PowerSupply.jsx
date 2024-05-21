@@ -37,7 +37,10 @@ const PowerSupply = () => {
   console.log(data);
   
   return (
-    <div>PowerSupply</div>
+    <div>
+      <div>Power Supply</div>
+      <button className="primary-button">Add Power Supply</button>
+    </div>
   )
 }
 

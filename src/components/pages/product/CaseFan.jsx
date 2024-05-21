@@ -37,7 +37,10 @@ const CaseFan = () => {
   console.log(data);
   
   return (
-    <div>CaseFan</div>
+    <div>
+      <div>Case Fan</div>
+      <button className="primary-button">Add Case Fan</button>
+    </div>
   )
 }
 

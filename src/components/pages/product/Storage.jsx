@@ -36,7 +36,10 @@ const Storage = () => {
 
   console.log(data);
   return (
-    <div>Storage</div>
+    <div>
+      <div>Storage</div>
+      <button className="primary-button">Add Storage</button>
+    </div>
   )
 }
 

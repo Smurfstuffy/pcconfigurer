@@ -37,7 +37,10 @@ const Motherboard = () => {
   console.log(data);
 
   return (
-    <div>Motherboard</div>
+    <div>
+      <div>Motherboard</div>
+      <button className="primary-button">Add Motherboard</button>
+    </div>
   )
 }
 

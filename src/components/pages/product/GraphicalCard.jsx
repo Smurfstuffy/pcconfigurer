@@ -37,7 +37,10 @@ const GraphicalCard = () => {
   console.log(data);
 
   return (
-    <div>GraphicalCard</div>
+    <div>
+      <div>Graphical Card</div>
+      <button className="primary-button">Add Graphical Card</button>
+    </div>
   )
 }
 

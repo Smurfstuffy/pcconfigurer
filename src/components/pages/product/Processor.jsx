@@ -37,7 +37,10 @@ const Processor = () => {
   console.log(data);
 
   return (
-    <div>Processor</div>
+    <div>
+      <div>Processor</div>
+      <button className="primary-button">Add Processor</button>
+    </div>
   )
 }
 

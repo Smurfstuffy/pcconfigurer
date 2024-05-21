@@ -37,7 +37,10 @@ const CpuCooler = () => {
   console.log(data);
   
   return (
-    <div>CpuCooler</div>
+    <div>
+      <div>CPU Cooler</div>
+      <button className="primary-button">Add CPU Cooler</button>
+    </div>
   )
 }
 

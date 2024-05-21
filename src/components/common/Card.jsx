@@ -6,13 +6,13 @@ const Card = ({ name, id, imgUrl }) => {
   const location = useLocation();
   const navigate = useNavigate(); 
 
-  // if (!imgUrl) {
-  //   imgUrl = getImageGeneric(name, location.pathname);
-  // }
+  if (!imgUrl) {
+    imgUrl = getImageGeneric(name, location.pathname);
+  }
 
   return (
     <div className="card hover:shadow-2xl hover:cursor-pointer" onClick={() => navigate(`${id}`)}>
-      <img src={imgUrl} alt={name} className="h-37 md:h-72  w-full object-cover" />
+      <img src={imgUrl} alt={name} className="h-37 md:h-72 w-full object-cover" />
       <div className="m-4 text-center">
         <span className="font-bold text-base md:text-lg">{name}</span>
       </div>

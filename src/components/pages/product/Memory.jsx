@@ -37,7 +37,10 @@ const Memory = () => {
   console.log(data);
 
   return (
-    <div>Memory</div>
+    <div>
+      <div>Memory</div>
+      <button className="primary-button">Add Memory</button>
+    </div>
   )
 }
 

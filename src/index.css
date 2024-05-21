@@ -28,4 +28,8 @@
   .secondary-button{
     @apply bg-amber-500 text-white font-bold text-lg rounded-md py-1 hover:bg-amber-600;
   }
+
+  .neutral-button {
+    @apply bg-gray-500 text-white font-bold text-lg rounded-md py-1 hover:bg-gray-600 hover:cursor-pointer;
+  }
 }

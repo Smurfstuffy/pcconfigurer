@@ -184,7 +184,7 @@ const PowerSupplyFilter = ({ setBody }) => {
           className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer my-1" />
       </form>
 
-      <botton className="primary-button w-full text-center my-6 hover:cursor-pointer" onClick={handleFiltersClick}>Apply Filters</botton>
+      <button className="primary-button w-full text-center my-6 hover:cursor-pointer" onClick={handleFiltersClick}>Apply Filters</button>
     </div>
   )
 }

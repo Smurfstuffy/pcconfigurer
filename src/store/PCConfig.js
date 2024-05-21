@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, autorun } from "mobx";
 
 class PCConfig {
   config = {
@@ -14,7 +14,16 @@ class PCConfig {
   }
 
   constructor() {
-    makeAutoObservable(this, {}, { deep: true })
+    makeAutoObservable(this, {}, { deep: true });
+
+    const storedConfig = localStorage.getItem("pcConfig");
+    if (storedConfig) {
+      this.config = JSON.parse(storedConfig);
+    }
+
+    autorun(() => {
+      localStorage.setItem("pcConfig", JSON.stringify(this.config));
+    });
   }
 
   setProcessor(processor) {

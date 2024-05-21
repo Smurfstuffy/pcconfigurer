@@ -147,7 +147,7 @@ const CaseFilters = ({ setBody }) => {
         </div>
       </form>
 
-      <botton className="primary-button w-full text-center my-6 hover:cursor-pointer" onClick={handleFiltersClick}>Apply Filters</botton>
+      <button className="primary-button w-full text-center my-6 hover:cursor-pointer" onClick={handleFiltersClick}>Apply Filters</button>
     </div>
   )
 }

@@ -131,7 +131,7 @@ const Configuration = observer(() => {
                   <button className="primary-button text-xs md:text-lg px-1 md:px-8" onClick={() => navigate('/products/casefans')}>Add Case Fan</button> :
                   <div className="flex items-center justify-between">
                     <p className="text-base md:text-lg text-gray-600 font-semibold hover:text-blue-600 hover:cursor-pointer"
-                      onClick={() => navigate(`/products/casefans/${PCConfig.storage.fan._id}`)}>
+                      onClick={() => navigate(`/products/casefans/${PCConfig.config.fan._id}`)}>
                       {PCConfig.config.fan.name}
                     </p>
                     <button className="neutral-button text-xs md:text-lg px-1 md:px-8 md:ml-8" onClick={() => PCConfig.removeFan()}>Remove Case Fan</button>
@@ -146,7 +146,7 @@ const Configuration = observer(() => {
                   <button className="primary-button text-xs md:text-lg px-1 md:px-8" onClick={() => navigate('/products/cases')}>Add Case</button> :
                   <div className="flex items-center justify-between">
                   <p className="text-base md:text-lg text-gray-600 font-semibold hover:text-blue-600 hover:cursor-pointer"
-                    onClick={() => navigate(`/products/cases/${PCConfig.storage.case._id}`)}>
+                    onClick={() => navigate(`/products/cases/${PCConfig.config.case._id}`)}>
                     {PCConfig.config.case.name}
                   </p>
                     <button className="neutral-button text-xs md:text-lg px-1 md:px-8 md:ml-8" onClick={() => PCConfig.removeCase()}>Remove Case</button>

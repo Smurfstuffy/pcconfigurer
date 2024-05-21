@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const GraphicalCardFilters = ({ setBody }) => {
-  
+
   const [minMemory, setMinMemory] = useState(2);
   const [maxMemory, setMaxMemory] = useState(48);
 
@@ -104,7 +104,7 @@ const GraphicalCardFilters = ({ setBody }) => {
           className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer my-1" />
       </form>
 
-      <botton className="primary-button w-full text-center my-6 hover:cursor-pointer" onClick={handleFiltersClick}>Apply Filters</botton>
+      <button className="primary-button w-full text-center my-6 hover:cursor-pointer" onClick={handleFiltersClick}>Apply Filters</button>
     </div>
   )
 }

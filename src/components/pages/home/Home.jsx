@@ -1,5 +1,6 @@
 import backgroundImage from '../../../img/background/PC_Components.jpg'
 import HomeComponents from './HomeComponents';
+import UserBuildsHome from './UserBuildsHome';
 
 const Home = () => {
 
@@ -16,6 +17,7 @@ const Home = () => {
         </div>
       </div>
       <div className='bg-gray-200 px-10 md:px-24'><HomeComponents /></div>
+      <div className='bg-gray-200 px-10 md:px-24'><UserBuildsHome /></div>
     </>
   );
 };

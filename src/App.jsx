@@ -5,7 +5,8 @@ import Layout from './components/layouts/Layout';
 import SignIn from './components/pages/SignIn';
 import SignUp from './components/pages/SignUp';
 import Configuration from './components/pages/Configuration';
-import UsersBuilds from './components/pages/UsersBuilds';
+import UsersBuilds from './components/pages/userbuilds/UsersBuilds';
+import ParticularUserBuild from './components/pages/userbuilds/ParticularUserBuild'
 import { useUserContext } from './hooks/UserContex';
 
 import Processors from './components/pages/products/Processors';
@@ -47,6 +48,10 @@ const App = () => {
         {
           path: "usersbuilds",
           element: <UsersBuilds />,
+        },
+        {
+          path: "usersbuilds/:id",
+          element: <ParticularUserBuild />,
         },
         {
           path: "products",

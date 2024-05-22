@@ -64,11 +64,11 @@ const SignUp = () => {
         <div className='rounded-xl bg-gray-200 border border-gray-400 mt-2 md:mt-4'>
           <form className='flex flex-col justify-center items-center py-4 px-10 md:px-36 md:py-6'>
             <input type="text" placeholder='Username' className='input' value={username} onChange={e => setUsername(e.target.value)} />
-            {error && <p className="text-base md:text-lg text-red-600">Incorrect or already used username</p>}
+            {error && <label className="text-base md:text-lg text-red-600">Incorrect or already used username</label>}
             <input type="password" placeholder='Password' className='input mt-4 md:mt-6' value={password} onChange={e => setPassword(e.target.value)} />
-            {incorrectPasswordLength && <p className="text-base md:text-lg text-red-600">Password length must be 8-16 characters</p>}
+            {incorrectPasswordLength && <label className="text-base md:text-lg text-red-600">Password length must be 8-16 characters</label>}
             <input type="password" placeholder='Password (again)' className='input mt-4 md:mt-6' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-            {incorrectConfirmPassword && <p className="text-base md:text-lg text-red-600">Incorrect password confirmation</p>}
+            {incorrectConfirmPassword && <label className="text-base md:text-lg text-red-600">Incorrect password confirmation</label>}
             <button className='primary-button mt-4 md:mt-6 w-full text-lg md:text-2xl py-2' onClick={handleRegister}>Sign Up</button>
           </form>
         </div>

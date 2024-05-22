@@ -7,7 +7,7 @@ export const useUserContext = () => {
 }
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));

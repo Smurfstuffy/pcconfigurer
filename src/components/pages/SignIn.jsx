@@ -51,7 +51,7 @@ const SignIn = () => {
           <form className='flex flex-col justify-center items-center py-4 px-10 md:px-36 md:py-6'>
             <input type="text" placeholder='Username' className='input' value={username} onChange={e => setUsername(e.target.value)} />
             <input type="password" placeholder='Password' className='input mt-4 md:mt-6' value={password} onChange={e => setPassword(e.target.value)} />
-            {error && <p className="text-base md:text-lg text-red-600">Incorrect username or password</p>}
+            {error && <label className="text-base md:text-lg text-red-600">Incorrect username or password</label>}
             <button className='primary-button mt-4 md:mt-6 w-full text-lg md:text-2xl py-2' onClick={handleLogin}>Sign In</button>
             <p className='font-semibold text-lg md:text-xl mt-4 md:mt-6'>Don't have an account?</p>
             <button className='primary-button-outline w-full mt-4 md:mt-6 text-lg md:text-2xl py-2' onClick={handleSignUp}>Sign Up</button>

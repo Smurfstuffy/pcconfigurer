@@ -265,15 +265,15 @@ const ParticularUserBuild = () => {
               </div>
               <div className="flex pl-2 py-2">
                 <p className="basis-1/2 text-lg md:text-2xl font-semibold">Average Rating:</p>
-                <p className="basis-1/2 text-lg md:text-2xl font-semibold">
+                <div className="basis-1/2 text-lg md:text-2xl font-semibold">
                   <BuildRating isAvg={true} id={data._id}/>
-                </p>
+                </div>
               </div>
               <div className="flex pl-2 py-2">
                 <p className="basis-1/2 text-lg md:text-2xl font-semibold">Your Rating:</p>
-                <p className="basis-1/2 text-lg md:text-2xl font-semibold">
+                <div className="basis-1/2 text-lg md:text-2xl font-semibold">
                   <BuildRating isAvg={false} id={data._id}/>
-                </p>
+                </div>
               </div>
             </div>
           </div>

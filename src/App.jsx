@@ -8,6 +8,7 @@ import Configuration from './components/pages/Configuration';
 import UsersBuilds from './components/pages/userbuilds/UsersBuilds';
 import ParticularUserBuild from './components/pages/userbuilds/ParticularUserBuild'
 import { useUserContext } from './hooks/UserContex';
+import { useState, useEffect } from 'react';
 
 import Processors from './components/pages/products/Processors';
 import CaseFans from './components/pages/products/CaseFans';
@@ -39,94 +40,94 @@ const App = () => {
       children: [
         {
           index: true,
-          element: <Home />,
+          element: user ? <Home /> : <Navigate to="/signin" />,
         },
         {
           path: "configuration",
-          element: <Configuration />,
+          element: user ? <Configuration /> : <Navigate to="/signin" />,
         },
         {
           path: "usersbuilds",
-          element: <UsersBuilds />,
+          element: user ? <UsersBuilds /> : <Navigate to="/signin" />,
         },
         {
           path: "usersbuilds/:id",
-          element: <ParticularUserBuild />,
+          element: user ? <ParticularUserBuild /> : <Navigate to="/signin" />,
         },
         {
           path: "products",
           children: [
             {
               path: "processors",
-              element: <Processors />,
+              element: user ? <Processors /> : <Navigate to="/signin" />,
             },
             {
               path: "processors/:id",
-              element: <Processor />,
+              element: user ? <Processor /> : <Navigate to="/signin" />,
             },
             {
               path: "casefans",
-              element: <CaseFans />,
+              element: user ? <CaseFans /> : <Navigate to="/signin" />,
             },
             {
               path: "casefans/:id",
-              element: <CaseFan />,
+              element: user ? <CaseFan /> : <Navigate to="/signin" />,
             },
             {
               path: "cases",
-              element: <Cases />,
+              element: user ? <Cases /> : <Navigate to="/signin" />,
             },
             {
               path: "cases/:id",
-              element: <Case />,
+              element: user ? <Case /> : <Navigate to="/signin" />,
             },
             {
               path: "graphicalcards",
-              element: <GraphicalCards />,
+              element: user ? <GraphicalCards /> : <Navigate to="/signin" />,
             },
             {
               path: "graphicalcards/:id",
-              element: <GraphicalCard />,
+              element: user ? <GraphicalCard /> : <Navigate to="/signin" />,
             },
             {
               path: "cpucoolers",
-              element: <CpuCoolers />,
+              element: user ? <CpuCoolers /> : <Navigate to="/signin" />,
             },
             {
               path: "cpucoolers/:id",
-              element: <CpuCooler />,
+              element: user ? <CpuCooler /> : <Navigate to="/signin" />,
             },
             {
               path: "memories",
-              element: <Memories />,
+              element: user ? <Memories /> : <Navigate to="/signin" />,
             },
             {
               path: "memories/:id",
-              element: <Memory />,
+              element: user ? <Memory /> : <Navigate to="/signin" />,
             },
             {
               path: "motherboards",
-              element: <MotherBoards />,
+              element: user ? <MotherBoards /> : <Navigate to="/signin" />,
             },
             {
               path: "motherboards/:id",
-              element: <MotherBoard />,
+              element: user ? <MotherBoard /> : <Navigate to="/signin" />,
             },
             {
               path: "powersupplies",
-              element: <PowerSupplies />,
+              element: user ? <PowerSupplies /> : <Navigate to="/signin" />,
             },
             {
               path: "powersupplies/:id",
-              element: <PowerSupply />,
+              element: user ? <PowerSupply /> : <Navigate to="/signin" />,
             },
             {
               path: "storages",
-              element: <Storages />,
+              element: user ? <Storages /> : <Navigate to="/signin" />,
             },
             {
               path: "storages/:id",
-              element: <Storage />,
+              element: user ? <Storage /> : <Navigate to="/signin" />,
             },
           ],
         },
@@ -142,7 +143,7 @@ const App = () => {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />
 };
 
 export default App;

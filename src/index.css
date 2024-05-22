@@ -33,3 +33,7 @@
     @apply bg-gray-500 text-white font-bold text-lg rounded-md py-1 hover:bg-gray-600 hover:cursor-pointer;
   }
 }
+
+svg.star-svg {
+  display: inline;
+}

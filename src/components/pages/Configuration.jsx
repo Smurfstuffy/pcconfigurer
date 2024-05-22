@@ -15,7 +15,6 @@ const Configuration = observer(() => {
   const handleCreateBuild = async (e) => {
     e.preventDefault();
     if (user) {
-      console.log('dsfsdfsd')
       const body = {
         user: user.username,
         buildName: pcBuildName,
@@ -42,6 +41,7 @@ const Configuration = observer(() => {
           console.error('Error occurred during fetching:', error);
         }
 
+        alert(`${pcBuildName}' succesfully published!`);
     }
   }
 

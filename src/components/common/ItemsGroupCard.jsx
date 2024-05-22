@@ -11,7 +11,7 @@ const ItemsGroupCard = ({popular}) => {
 
   if(popular) {
     return (
-      <div className="card flex flex-col justify-around bg-gray-200">
+      <div className="card flex flex-col justify-around bg-white px-1">
         <h1 class="font-bold text-2xl md:text-4xl">Popular PC components</h1>
         <span class="block text-gray-600 text-lg md:text-xl">Explore popular PC components to create your own configuration</span>
         <button class="primary-button rounded-xl" onClick={() => navigate('/configuration')}>Create your Build</button>
@@ -19,8 +19,8 @@ const ItemsGroupCard = ({popular}) => {
     )  
   } else {
     return (
-      <div className="card flex flex-col justify-around bg-gray-200">
-        <h1 class="font-bold text-2xl md:text-4xl">Other users's build</h1>
+      <div className="card flex flex-col justify-around bg-white px-1">
+        <h1 class="font-bold text-2xl md:text-4xl">Other users's builds</h1>
         <span class="block text-gray-600 text-lg md:text-xl">Research other's builds to inspire yourself and find better choice for you</span>
         <button class="primary-button rounded-xl" onClick={() => navigate('/usersbuilds')}>View more builds</button>
       </div>

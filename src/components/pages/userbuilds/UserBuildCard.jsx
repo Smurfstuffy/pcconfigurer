@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { useUserContext } from "../../../hooks/UserContex";
 import getImageGeneric from "../../../functions/getImageGeneric";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const UserBuildCard = ({ name, author, id, caseId }) => {
   const navigate = useNavigate();
   const { loading, data, error, fetchData } = useFetch();
   const { user } = useUserContext();
   const [pcCase, setCase] = useState();
+  const location = useLocation();
 
   useEffect(() => {
     if (user) {
@@ -57,11 +59,13 @@ const UserBuildCard = ({ name, author, id, caseId }) => {
   if (loading) return <div>Loading...</div>
 
   if (data && pcCase) {
-    if(!pcCase.imgUrl) {
+    if (!pcCase.imgUrl) {
       pcCase.imgUrl = getImageGeneric(pcCase.name, 'cases');
     }
     return (
-      <div className="card hover:shadow-2xl hover:cursor-pointer" onClick={() => navigate(`usersbuilds/${id}`)}>
+      <div className="card hover:shadow-2xl hover:cursor-pointer"
+        onClick={() => navigate(location.pathname.includes('usersbuilds') ? `${id}` : `usersbuilds/${id}`)}
+      >
         <img src={pcCase.imgUrl} alt={pcCase.name} className="h-37 md:h-72 w-full object-cover" />
         <div className="m-4 text-center flex flex-col">
           <span className="font-bold text-base md:text-lg">{name}</span>

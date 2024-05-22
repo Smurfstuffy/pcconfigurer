@@ -52,7 +52,6 @@ const getCases = async (req, res) => {
 
 const getCaseById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

@@ -52,7 +52,6 @@ const getPowerSupplies = async (req, res) => {
 
 const getPowerSupplyById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

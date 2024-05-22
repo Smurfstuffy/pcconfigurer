@@ -46,7 +46,6 @@ const getCpuCoolers = async (req, res) => {
 
 const getCpuCoolerById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

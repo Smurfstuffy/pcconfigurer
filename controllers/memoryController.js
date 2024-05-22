@@ -52,7 +52,6 @@ const getMemories = async (req, res) => {
 
 const getMemoryById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

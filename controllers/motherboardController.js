@@ -62,7 +62,6 @@ const getMotherBoards = async (req, res) => {
 
 const getMotherboardById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

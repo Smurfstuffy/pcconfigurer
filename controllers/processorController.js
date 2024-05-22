@@ -61,7 +61,6 @@ const getProcessors = async (req, res) => {
 
 const getProcessorById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

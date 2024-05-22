@@ -57,7 +57,6 @@ const getStorages = async (req, res) => {
 
 const getStorageById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

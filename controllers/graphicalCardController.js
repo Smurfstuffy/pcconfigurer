@@ -61,7 +61,6 @@ const getGraphicalCards = async (req, res) => {
 
 const getGraphicalCardById = async (req, res) => {
   const { id } = req.body; 
-  console.log(id);
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {

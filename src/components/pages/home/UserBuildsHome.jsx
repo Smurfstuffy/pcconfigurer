@@ -30,8 +30,6 @@ const UserBuildsHome = () => {
 
   if (loading) return <div>Loading...</div>
 
-  console.log(data)
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4">
       <ItemsGroupCard popular={false}/>

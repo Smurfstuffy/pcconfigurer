@@ -14,6 +14,7 @@ const Motherboard = observer(() => {
   const location = useLocation();
   const { user } = useUserContext();
   const [prices, setPrices] = useState();
+  const [pricesLoading, setPricesLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -40,6 +41,7 @@ const Motherboard = observer(() => {
     if (user && data) {
       (async () => {
         try {
+          setPricesLoading(true);
           const response = await axios({
             method: 'post',
             url: 'http://localhost:8080/api/getpartsbyname',
@@ -49,8 +51,10 @@ const Motherboard = observer(() => {
             },
           });
           setPrices(response.data);
+          setPricesLoading(false);
         } catch (error) {
           console.error('Error fetching data:', error);
+          setPricesLoading(false);
         }
       })();
     }
@@ -61,7 +65,6 @@ const Motherboard = observer(() => {
   if (loading) return <div>Loading...</div>
 
   if (data) {
-    console.log(data)
     if (!data.imgUrl) {
       data.imgUrl = getImageGeneric(data.name, location.pathname);
     }
@@ -114,7 +117,8 @@ const Motherboard = observer(() => {
         <div className="card flex flex-col mx-8 border-gray-500">
           <p className="bg-indigo-900 w-full text-center text-xl md:text-3xl text-white font-bold py-1 cursor-default">Prices</p>
           <div className="flex flex-col">
-            {!prices && <p className="text-lg md:text-2xl font-semibold text-center py-1">Oops... No prices found for this product</p>}
+            {pricesLoading && <p className="text-lg md:text-2xl font-semibold text-center py-1">Loading...</p>}
+            {!prices && !pricesLoading && <p className="text-lg md:text-2xl font-semibold text-center py-1">Oops... No prices found for this product</p>}
             {prices && prices.map(price => (
               <a href={price.product.productUrl} className="flex justify-between px-1 md:px-6 py-1 hover:bg-gray-100 hover:cursor-pointer" key={price.product.title}>
                 <p className="text-lg md:text-2xl font-semibold">{price.source}</p>

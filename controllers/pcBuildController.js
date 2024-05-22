@@ -61,8 +61,36 @@ async function getPCBuildById(req, res) {
   }
 }
 
+async function scorePCBuild(req, res) {
+  const { id, username, score } = req.body;
+
+  if (!id || !username || score == null) {
+    return res.status(400).json({ error: 'ID, username, and score are required' });
+  }
+
+  try {
+    const pcBuild = await pcBuildModel.findById(id);
+    if (!pcBuild) {
+      return res.status(404).json({ error: 'PC Build not found' });
+    }
+
+    const existingScore = pcBuild.scores.find((s) => s.username === username);
+    if (existingScore) {
+      existingScore.score = score;
+    } else {
+      pcBuild.scores.push({ username, score });
+    }
+
+    await pcBuild.save();
+    res.status(200).json(pcBuild);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   createPCBuild,
   getAllPCBuilds,
-  getPCBuildById
+  getPCBuildById,
+  scorePCBuild
 };

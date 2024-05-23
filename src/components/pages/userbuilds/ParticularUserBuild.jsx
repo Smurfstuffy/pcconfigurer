@@ -221,7 +221,7 @@ const ParticularUserBuild = () => {
       <div className="flex flex-col bg-gray-200 h-auto md:h-screen px-0 lg:px-36">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 py-4 md:my-2">
           <div className="card flex flex-col items-center border-gray-500">
-            <img src={pcCase.imgUrl} alt={pcCase.name} className="w-4/6 h-full" />
+            <img src={pcCase.imgUrl} alt={pcCase.name} />
             <p className="bg-indigo-900 w-full text-center text-xl lg:text-3xl text-white font-bold py-1 cursor-default">{data.buildName} by {data.user}</p>
           </div>
           <div className="card flex flex-col border-gray-500">

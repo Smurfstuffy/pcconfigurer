@@ -12,16 +12,16 @@ const Layout = () => {
   }
 
   return (
-    <React.Fragment>
-      <header>
-        <Navbar toggleOpened={toggleOpened}/>
-        <MobileNav isOpen={isOpened}/>
+    <div className="flex flex-col h-screen">
+      <header className="w-auto">
+        <Navbar toggleOpened={toggleOpened} />
+        <MobileNav isOpen={isOpened} />
       </header>
-      <main>
+      <main className="flex-grow overflow-auto">
         <Outlet />
       </main>
-    </React.Fragment>
+    </div>
   )
-}  
+}
 
 export default Layout

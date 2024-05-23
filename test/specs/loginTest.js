@@ -1,7 +1,7 @@
 const loginPage = require("../../src/po/loginPage");
 
 describe('Incorrect login username test', () => {
-  it('Must display message of incorrect username', async () => {
+  it('Must display message of incorrect password', async () => {
       await loginPage.open();
       await loginPage.signIn('logintest', '12345679');
 
@@ -13,7 +13,7 @@ describe('Incorrect login username test', () => {
 });
 
 describe('Incorrect login password test', () => {
-  it('Must display message of incorrect password', async () => {
+  it('Must display message of incorrect login', async () => {
       await loginPage.open();
       await loginPage.signIn('incorrectlogintest', '12345678');
 
@@ -25,7 +25,7 @@ describe('Incorrect login password test', () => {
 });
 
 describe('Correct login test', () => {
-  it('Must navigate to top rated page', async () => {
+  it('Must navigate to home page', async () => {
       await loginPage.open();
       await loginPage.signIn('logintest', '12345678');
 

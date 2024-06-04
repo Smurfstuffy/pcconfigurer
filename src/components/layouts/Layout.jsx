@@ -17,7 +17,7 @@ const Layout = () => {
         <Navbar toggleOpened={toggleOpened} />
         <MobileNav isOpen={isOpened} />
       </header>
-      <main className="flex-grow overflow-auto">
+      <main className="flex-grow overflow-auto bg-gray-200">
         <Outlet />
       </main>
     </div>

@@ -218,7 +218,7 @@ const ParticularUserBuild = () => {
       pcCase.imgUrl = getImageGeneric(pcCase.name, 'cases');
     }
     return (
-      <div className="flex flex-col bg-gray-200 px-0 lg:px-36">
+      <div className="flex flex-col px-0 lg:px-36">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 py-4 md:my-2">
           <div className="card flex flex-col items-center border-gray-500">
             <img src={pcCase.imgUrl} alt={pcCase.name} />

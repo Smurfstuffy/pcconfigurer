@@ -69,7 +69,7 @@ const Storage = observer(() => {
       data.imgUrl = getImageGeneric(data.name, location.pathname);
     }
     return (
-      <div className="flex flex-col bg-gray-200 h-screen px-0 lg:px-36">
+      <div className="flex flex-col h-screen px-0 lg:px-36">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 py-4 md:my-2">
           <div className="card flex flex-col items-center border-gray-500">
             <img src={data.imgUrl} alt={data.name} className="w-4/6 h-full" />

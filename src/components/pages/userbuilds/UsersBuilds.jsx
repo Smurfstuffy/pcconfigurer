@@ -31,7 +31,7 @@ const UsersBuilds = () => {
   if (loading) return <div>Loading...</div>
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4 bg-gray-200">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4">
       <ItemsGroupCard popular={false}/>
       {data && data.map(el => (
         <UserBuildCard key={el._id} name={el.buildName} author={el.user} id={el._id} caseId={el.pcCase} />

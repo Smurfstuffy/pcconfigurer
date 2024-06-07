@@ -13,7 +13,7 @@ const UserBuildsHome = () => {
       (async () => {
         try {
           await fetchData(
-            'http://localhost:8080/api/getallpcbuilds?limit=7',
+            'http://localhost:8080/api/getallpcbuilds?limit=3',
             'get',
             {},
             {

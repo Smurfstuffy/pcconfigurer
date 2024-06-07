@@ -16,8 +16,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className='px-10 md:px-24'><HomeComponents /></div>
-      <div className='bg-indigo-900 px-10 md:px-24'><UserBuildsHome /></div>
+      <div className='sm:px-10 md:px-24'><HomeComponents /></div>
+      <div className='bg-indigo-900 sm:px-10 md:px-24'><UserBuildsHome /></div>
     </>
   );
 };

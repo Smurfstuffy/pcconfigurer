@@ -33,7 +33,7 @@ const HomeComponentCard = ({ url, link, name }) => {
   if (data) {
     return (
       <div className="card hover:shadow-2xl hover:cursor-pointer" onClick={() => navigate(link)}>
-        <img src={data.products.at(0).imgUrl} alt={data.products.at(0).name} className="h-37 md:h-72  w-full object-cover" />
+        <img src={data.products.at(0).imgUrl} alt={data.products.at(0).name} className="h-64 md:h-80 w-full object-cover" />
         <div className="m-4 text-center">
           <span className="font-bold text-xl lg:text-xl">{name}</span>
         </div>

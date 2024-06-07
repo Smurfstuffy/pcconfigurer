@@ -105,7 +105,7 @@ const GraphicalCard = observer(() => {
                 </div>
                 <div className="flex pl-2 py-2">
                   <p className="basis-1/2 text-lg md:text-2xl font-semibold">Base Price:</p>
-                  <p className="basis-1/2 text-lg md:text-2xl font-semibold">{data.price}$ / {(data.price * 39.6).toFixed(2)}₴</p>
+                  <p className="basis-1/2 text-lg md:text-2xl font-semibold">{data.price}$ / {(data.price * 40.2).toFixed(2)}₴</p>
                 </div>
                 <div className="flex pl-2 py-2">
                   <p className="basis-1/2 text-lg md:text-2xl font-semibold">Color:</p>

@@ -5,6 +5,7 @@ import { useUserContext } from "../../../hooks/UserContex";
 import getImageGeneric from "../../../functions/getImageGeneric";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { BuildRating } from "./BuildRating";
 
 const UserBuildCard = ({ name, author, id, caseId }) => {
   const navigate = useNavigate();
@@ -66,10 +67,11 @@ const UserBuildCard = ({ name, author, id, caseId }) => {
       <div className="card hover:shadow-2xl hover:cursor-pointer"
         onClick={() => navigate(location.pathname.includes('usersbuilds') ? `${id}` : `usersbuilds/${id}`)}
       >
-        <img src={pcCase.imgUrl} alt={pcCase.name} className="h-37 md:h-72 w-full object-cover" />
+        <img src={pcCase.imgUrl} alt={pcCase.name} className="h-72 md:h-96 w-full object-cover" />
         <div className="m-4 text-center flex flex-col">
           <span className="font-bold text-base md:text-lg">{name}</span>
           <span className="font-semibold text-base md:text-lg text-gray-500">by {author}</span>
+          <BuildRating isAvg={true} id={id} />
         </div>
       </div>
     )

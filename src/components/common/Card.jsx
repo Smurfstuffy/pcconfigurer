@@ -12,7 +12,7 @@ const Card = ({ name, id, imgUrl }) => {
 
   return (
     <div className="card hover:shadow-2xl hover:cursor-pointer" onClick={() => navigate(`${id}`)}>
-      <img src={imgUrl} alt={name} className="h-37 md:h-72 w-full object-cover" />
+      <img src={imgUrl} alt={name} className="h-64 md:h-80 w-full object-cover" />
       <div className="m-4 text-center">
         <span className="font-bold text-base md:text-lg">{name}</span>
       </div>

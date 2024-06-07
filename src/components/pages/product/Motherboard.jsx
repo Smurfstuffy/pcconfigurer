@@ -78,7 +78,7 @@ const Motherboard = observer(() => {
         <div className="flex flex-col justify-center lg:px-64 absolute inset-0">
           <div className="bg-white grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 py-4">
             <div className="flex flex-col items-center justify-center border-gray-500">
-              <img src={data.imgUrl} alt={data.name} className="w-5/6 h-auto" />
+              <img src={data.imgUrl} alt={data.name} className="w-4/6 h-auto" />
             </div>
             <div className="flex flex-col border-gray-500">
               <div className="flex flex-col h-full">
@@ -101,7 +101,7 @@ const Motherboard = observer(() => {
                 </div>
                 <div className="flex pl-2 py-2">
                   <p className="basis-1/2 text-lg md:text-2xl font-semibold">Base Price:</p>
-                  <p className="basis-1/2 text-lg md:text-2xl font-semibold">{data.price}$ / {(data.price * 39.6).toFixed(2)}₴</p>
+                  <p className="basis-1/2 text-lg md:text-2xl font-semibold">{data.price}$ / {(data.price * 40.2).toFixed(2)}₴</p>
                 </div>
                 <div className="flex pl-2 py-2">
                   <p className="basis-1/2 text-lg md:text-2xl font-semibold">Color:</p>

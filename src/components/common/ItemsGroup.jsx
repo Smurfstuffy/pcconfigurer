@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Pagination from "./Pagination";
 import { useUserContext } from "../../hooks/UserContex";
+import SkeletonCard from "./SkeletonCard";
 
 const ItemsGroup = ({ url, body }) => {
   const [page, setPage] = useState(1);
@@ -29,7 +30,15 @@ const ItemsGroup = ({ url, body }) => {
 
   if (error) return <div>{error}</div>
 
-  if (loading) return <div>Loading...</div>
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4">
+        {Array(8).fill(0).map((_, index) => (
+          <SkeletonCard key={index} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <>

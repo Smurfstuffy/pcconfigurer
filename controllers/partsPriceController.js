@@ -74,18 +74,15 @@ const getPartsByName = async (req, res) => {
       return res.status(400).json({ message: 'nameToFind is required' });
     }
 
-    // Escape special characters for regex
     const escapedWords = nameToFind.split(' ').map(word => word.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
     const regex = new RegExp(escapedWords.map(word => `(?=.*${word})`).join(''), 'i');
 
-    // Fetch all parts prices without hardcoding the source
     const partsPrices = await PartsPrice.find({});
 
-    // Filter and construct the response
     const response = partsPrices.map(partsPrice => {
-      const matchedProduct = partsPrice.products.find(product => regex.test(product.title));
+      const matchedProduct = partsPrice.products.find(product => regex.test(product.title) && product.price !== null && product.price !== 'Null');
       return matchedProduct ? { source: partsPrice.source, product: matchedProduct } : null;
-    }).filter(entry => entry !== null); // Filter out sources with no matching products
+    }).filter(entry => entry !== null); 
 
     if (response.length === 0) {
       return res.status(404).json({ message: 'No prices found matching the criteria' });

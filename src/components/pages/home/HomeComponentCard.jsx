@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useUserContext } from "../../../hooks/UserContex";
+import SkeletonCard from "../../common/SkeletonCard";
 
 const HomeComponentCard = ({ url, link, name }) => {
   const navigate = useNavigate();
@@ -28,14 +29,7 @@ const HomeComponentCard = ({ url, link, name }) => {
 
   if (error) return <div>{error}</div>
 
-  if (loading) {
-    return (
-      <div className="animate-pulse flex flex-col items-center">
-        <div className="bg-gray-300 h-64 md:h-80 w-full mb-4"></div>
-        <div className="bg-gray-300 h-6 w-3/4"></div>
-      </div>
-    );
-  }
+  if (loading) return <SkeletonCard />
 
   if (data) {
     return (

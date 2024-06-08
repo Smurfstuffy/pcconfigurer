@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-const CpuCoolerFilters = ({ setBody }) => {
+const CpuCoolerFilters = ({ setBody, setSearchQuery, setOpened }) => {
   const [minSize, setMinSize] = useState(40);
   const [maxSize, setMaxSize] = useState(200);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       minSize: minSize,
       maxSize: maxSize,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

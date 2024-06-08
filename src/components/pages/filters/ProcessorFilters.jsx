@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const ProcessorFilters = ({ setBody }) => {
+const ProcessorFilters = ({ setBody, setSearchQuery, setOpened }) => {
   const [manufacturers, setManufacturers] = useState([]);
 
   const [isAmd, setAmd] = useState(false);
@@ -25,6 +25,7 @@ const ProcessorFilters = ({ setBody }) => {
   }, [isAmd, isIntel]);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       manufacturer: manufacturers,
       minCoreCount: minCore,
@@ -34,7 +35,8 @@ const ProcessorFilters = ({ setBody }) => {
       minTdp: minTdp,
       maxTdp: maxTdp,
       smt: isSmt,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

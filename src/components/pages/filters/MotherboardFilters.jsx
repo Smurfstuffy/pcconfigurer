@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const MotherboardFilters = ({ setBody }) => {
+const MotherboardFilters = ({ setBody, setSearchQuery, setOpened }) => {
   const [sockets, setSockets] = useState([]);
 
   const [am4, setAm4] = useState(false);
@@ -40,6 +40,7 @@ const MotherboardFilters = ({ setBody }) => {
   }, [am4, am5, lga1200, lga1700]);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       socket: sockets,
       formFactor: formFactor,
@@ -48,6 +49,7 @@ const MotherboardFilters = ({ setBody }) => {
       minMemorySlots: minMemorySlots,
       maxMemorySlots: maxMemorySlots,
     })
+    setOpened(prev => !prev);
   }
 
   return (

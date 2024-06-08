@@ -49,7 +49,7 @@ const ItemsGroup = ({ url, body }) => {
           <Card name={product.name} id={product._id} key={product._id} imgUrl={product.imgUrl} />
         ))}
       </div>
-      {data && <Pagination page={page} setPage={setPage} totalPages={data.totalPages} />}
+      {data && data.totalPages>1 && <Pagination page={page} setPage={setPage} totalPages={data.totalPages} />}
     </>
   )
 }

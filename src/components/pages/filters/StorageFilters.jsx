@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const StorageFilters = ({ setBody }) => {
+const StorageFilters = ({ setBody, setSearchQuery, setOpened }) => {
   const [types, setTypes] = useState([]);
 
   const [isSsd, setSsd] = useState(false);
@@ -19,11 +19,13 @@ const StorageFilters = ({ setBody }) => {
   }, [isSsd, isHdd5400, isHdd7200]);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       type: types,
       minCapacity: minCapacity,
       maxCapacity: maxCapacity,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

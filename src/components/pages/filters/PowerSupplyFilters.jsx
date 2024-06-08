@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const PowerSupplyFilter = ({ setBody }) => {
+const PowerSupplyFilter = ({ setBody, setSearchQuery, setOpened }) => {
   const [types, setTypes] = useState([]);
 
   const [atx, setAtx] = useState(false);
@@ -39,12 +39,14 @@ const PowerSupplyFilter = ({ setBody }) => {
   }, [white, bronze, silver, gold, platinum, titanium]);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       type: types,
       efficiency: efficiency,
       minWattage: minWattage,
       maxWattage: maxWattage,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

@@ -6,6 +6,7 @@ import getImageGeneric from "../../../functions/getImageGeneric";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { BuildRating } from "./BuildRating";
+import SkeletonBuildCard from "./SkeletonBuildCard";
 
 const UserBuildCard = ({ name, author, id, caseId }) => {
   const navigate = useNavigate();
@@ -57,8 +58,8 @@ const UserBuildCard = ({ name, author, id, caseId }) => {
 
   if (error) return <div>{error}</div>
 
-  if (loading) return <div>Loading...</div>
-
+  if (loading) return <SkeletonBuildCard />;
+  
   if (data && pcCase) {
     if (!pcCase.imgUrl) {
       pcCase.imgUrl = getImageGeneric(pcCase.name, 'cases');

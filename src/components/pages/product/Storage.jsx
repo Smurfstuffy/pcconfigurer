@@ -12,6 +12,8 @@ import axios from "axios";
 import backgroundImage from './../../../img/background/PC_Components.jpg';
 import { formatPrice } from "../../../functions/formatPrice";
 import Icon from "../../common/Icon";
+import Spinner from "../../common/Spinner";
+import SkeletonProduct from "../../common/SkeletonProduct";
 
 const Storage = observer(() => {
   const { loading, data, error, fetchData } = useFetch();
@@ -66,7 +68,7 @@ const Storage = observer(() => {
 
   if (error) return <div>{error}</div>
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <SkeletonProduct />
 
   if (data) {
     if (!data.imgUrl) {
@@ -76,13 +78,13 @@ const Storage = observer(() => {
       <div className="relative flex flex-col h-full">
         <img src={backgroundImage} alt="PC_Components_2" className="w-screen object-cover h-full" />
         <div className="flex flex-col justify-center lg:px-64 absolute inset-0">
-        <div className="bg-white grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 py-4">
+          <div className="bg-white grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 py-4">
             <div className="flex flex-col items-center justify-center border-gray-500">
               <img src={data.imgUrl} alt={data.name} className="w-5/6 h-auto" />
             </div>
             <div className="flex flex-col border-gray-500">
               <div className="flex flex-col h-full">
-              <p className="bg-indigo-900 w-full text-center text-xl lg:text-3xl text-white font-bold py-1 cursor-default">{data.name}</p>
+                <p className="bg-indigo-900 w-full text-center text-xl lg:text-3xl text-white font-bold py-1 cursor-default">{data.name}</p>
                 <div className="flex pl-2 py-2">
                   <p className="basis-1/2 text-lg md:text-2xl font-semibold">Type:</p>
                   <p className="basis-1/2 text-lg md:text-2xl font-semibold">{data.type}</p>
@@ -122,12 +124,16 @@ const Storage = observer(() => {
           <div className="bg-white h-full flex flex-col">
             <p className="bg-indigo-900 w-full text-center text-xl md:text-3xl text-white font-bold py-1 cursor-default">Prices</p>
             <div className="flex flex-col">
-              {pricesLoading && <p className="text-lg md:text-2xl font-semibold text-center py-1">Loading...</p>}
+              {pricesLoading && (
+                <div className="flex justify-center py-2">
+                  <Spinner />
+                </div>
+              )}
               {!prices && !pricesLoading && <p className="text-lg md:text-2xl font-semibold text-center py-1">Oops... No prices found for this product</p>}
               {!pricesLoading && prices && prices.map(price => (
                 <a href={price.product.productUrl} className="flex justify-between px-1 md:px-6 py-1 hover:bg-gray-200 hover:cursor-pointer" key={price.product.title}>
                   <div className="flex items-center">
-                    <Icon shop={price.source}/>
+                    <Icon shop={price.source} />
                     <p className="text-lg md:text-2xl font-semibold ml-1">{price.source}</p>
                   </div>
                   <p className="text-lg md:text-2xl font-semibold">{formatPrice(price.product.price)}</p>

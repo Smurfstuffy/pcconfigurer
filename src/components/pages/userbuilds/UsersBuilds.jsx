@@ -3,6 +3,7 @@ import useFetch from "../../../hooks/useFetch";
 import { useUserContext } from "../../../hooks/UserContex";
 import { useEffect } from "react";
 import UserBuildCard from "../userbuilds/UserBuildCard";
+import SkeletonBuildCard from "./SkeletonBuildCard";
 
 const UsersBuilds = () => {
   const { loading, data, error, fetchData } = useFetch();
@@ -28,7 +29,15 @@ const UsersBuilds = () => {
 
   if (error) return <div>{error}</div>
 
-  if (loading) return <div>Loading...</div>
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4">
+        {Array(8).fill(0).map((_, index) => (
+          <SkeletonBuildCard key={index}/>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 py-4">

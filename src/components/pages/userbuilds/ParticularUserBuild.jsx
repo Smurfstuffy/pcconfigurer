@@ -10,6 +10,7 @@ import { BuildRating } from "./BuildRating";
 import backgroundImage from './../../../img/background/PC_Components.jpg'
 import { formatPrice } from "../../../functions/formatPrice";
 import Icon from "../../common/Icon";
+import SkeletonParticularUserBuild from "./SkeletonParticularUserBuild";
 
 const ParticularUserBuild = () => {
   const { loading, data, error, fetchData } = useFetch();
@@ -205,7 +206,7 @@ const ParticularUserBuild = () => {
 
   if (error) return <div>{error}</div>
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <SkeletonParticularUserBuild />
 
   if (data &&
     cpu &&

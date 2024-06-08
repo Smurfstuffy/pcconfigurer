@@ -12,6 +12,8 @@ import axios from "axios";
 import backgroundImage from './../../../img/background/PC_Components.jpg';
 import { formatPrice } from "../../../functions/formatPrice";
 import Icon from "../../common/Icon";
+import SkeletonProduct from "../../common/SkeletonProduct";
+import Spinner from "../../common/Spinner";
 
 const Processor = observer(() => {
   const { loading, data, error, fetchData } = useFetch();
@@ -66,7 +68,7 @@ const Processor = observer(() => {
 
   if (error) return <div>{error}</div>
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <SkeletonProduct />
 
   if (data) {
     if (!data.imgUrl) {
@@ -126,12 +128,16 @@ const Processor = observer(() => {
           <div className="bg-white h-full flex flex-col">
             <p className="bg-indigo-900 w-full text-center text-xl md:text-3xl text-white font-bold py-1 cursor-default">Prices</p>
             <div className="flex flex-col">
-              {pricesLoading && <p className="text-lg md:text-2xl font-semibold text-center py-1">Loading...</p>}
+              {pricesLoading && (
+                <div className="flex justify-center py-2">
+                  <Spinner />
+                </div>
+              )}
               {!prices && !pricesLoading && <p className="text-lg md:text-2xl font-semibold text-center py-1">Oops... No prices found for this product</p>}
               {!pricesLoading && prices && prices.map(price => (
                 <a href={price.product.productUrl} className="flex justify-between items-center px-2 md:px-6 py-1 hover:bg-gray-200 hover:cursor-pointer" key={price.product.title}>
                   <div className="flex items-center">
-                    <Icon shop={price.source}/>
+                    <Icon shop={price.source} />
                     <p className="text-lg md:text-2xl font-semibold ml-1">{price.source}</p>
                   </div>
                   <p className="text-lg md:text-2xl font-semibold">{formatPrice(price.product.price)}</p>

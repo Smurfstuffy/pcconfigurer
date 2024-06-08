@@ -7,6 +7,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { BuildRating } from "./BuildRating";
 import SkeletonBuildCard from "./SkeletonBuildCard";
+import ErrorPage from "../../common/ErrorPage";
 
 const UserBuildCard = ({ name, author, id, caseId }) => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const UserBuildCard = ({ name, author, id, caseId }) => {
     }
   }, [user, data, caseId])
 
-  if (error) return <div>{error}</div>
+  if (error) return <ErrorPage error={error}/>
 
   if (loading) return <SkeletonBuildCard />;
   

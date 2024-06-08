@@ -14,6 +14,7 @@ import { formatPrice } from "../../../functions/formatPrice";
 import Icon from "../../common/Icon";
 import Spinner from "../../common/Spinner";
 import SkeletonProduct from "../../common/SkeletonProduct";
+import ErrorPage from "../../common/ErrorPage";
 
 const CaseFan = observer(() => {
   const { loading, data, error, fetchData } = useFetch();
@@ -66,7 +67,7 @@ const CaseFan = observer(() => {
     }
   }, [user, data])
 
-  if (error) return <div>{error}</div>
+  if (error) return <ErrorPage error={error} />
 
   if (loading) return <SkeletonProduct />
 

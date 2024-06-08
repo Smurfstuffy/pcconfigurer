@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useUserContext } from "../../../hooks/UserContex";
 import SkeletonCard from "../../common/SkeletonCard";
+import ErrorPage from "../../common/ErrorPage";
 
 const HomeComponentCard = ({ url, link, name }) => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const HomeComponentCard = ({ url, link, name }) => {
     }
   }, [user, url])
 
-  if (error) return <div>{error}</div>
+  if (error) return <></>
 
   if (loading) return <SkeletonCard />
 

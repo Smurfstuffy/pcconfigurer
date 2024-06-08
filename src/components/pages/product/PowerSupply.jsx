@@ -14,6 +14,7 @@ import { formatPrice } from "../../../functions/formatPrice";
 import Icon from "../../common/Icon";
 import SkeletonProduct from "../../common/SkeletonProduct";
 import Spinner from "../../common/Spinner";
+import ErrorPage from "../../common/ErrorPage";
 
 const PowerSupply = observer(() => {
   const { loading, data, error, fetchData } = useFetch();
@@ -66,7 +67,7 @@ const PowerSupply = observer(() => {
     }
   }, [user, data])
 
-  if (error) return <div>{error}</div>
+  if (error) return <ErrorPage error={error} />
 
   if (loading) return <SkeletonProduct />
 

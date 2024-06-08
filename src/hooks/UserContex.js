@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 const UserContext = createContext();
 
@@ -12,9 +13,24 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      login(storedUser);
+      validateUser(storedUser);
     }
   }, []);
+
+  const validateUser = async (validatingUser) => {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'http://localhost:8080/api/verifytoken',
+        headers: {
+          'Authorization': 'Bearer ' + validatingUser.token,
+        },
+      });
+      login(response.data);
+    } catch (error) {
+      logout();
+    }
+  };
 
   const login = (loggedInUser) => {
     localStorage.setItem("user", JSON.stringify(loggedInUser));

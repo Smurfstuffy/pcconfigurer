@@ -11,6 +11,7 @@ import backgroundImage from './../../../img/background/PC_Components.jpg'
 import { formatPrice } from "../../../functions/formatPrice";
 import Icon from "../../common/Icon";
 import SkeletonParticularUserBuild from "./SkeletonParticularUserBuild";
+import ErrorPage from "../../common/ErrorPage";
 
 const ParticularUserBuild = () => {
   const { loading, data, error, fetchData } = useFetch();
@@ -204,7 +205,7 @@ const ParticularUserBuild = () => {
     }
   }, [user, data])
 
-  if (error) return <div>{error}</div>
+  if (error) return <ErrorPage error={error} />
 
   if (loading) return <SkeletonParticularUserBuild />
 

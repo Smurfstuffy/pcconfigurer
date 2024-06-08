@@ -4,6 +4,7 @@ import { useUserContext } from "../../../hooks/UserContex";
 import { useEffect } from "react";
 import UserBuildCard from "../userbuilds/UserBuildCard";
 import SkeletonBuildCard from "./SkeletonBuildCard";
+import ErrorPage from "../../common/ErrorPage";
 
 const UsersBuilds = () => {
   const { loading, data, error, fetchData } = useFetch();
@@ -27,7 +28,7 @@ const UsersBuilds = () => {
     }
   }, [user])
 
-  if (error) return <div>{error}</div>
+  if (error) return <ErrorPage error={error} />
 
   if (loading) {
     return (

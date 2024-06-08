@@ -26,7 +26,7 @@ const UserBuildsHome = () => {
     }
   }, [user])
 
-  if (error) return <div>{error}</div>
+  if (error) return <></>
 
   if (loading) return <></>
 

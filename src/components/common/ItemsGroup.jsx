@@ -5,6 +5,7 @@ import useFetch from "../../hooks/useFetch";
 import Pagination from "./Pagination";
 import { useUserContext } from "../../hooks/UserContex";
 import SkeletonCard from "./SkeletonCard";
+import ErrorPage from "./ErrorPage";
 
 const ItemsGroup = ({ url, body }) => {
   const [page, setPage] = useState(1);
@@ -28,7 +29,7 @@ const ItemsGroup = ({ url, body }) => {
     }
   }, [page, user, body])
 
-  if (error) return <div>{error}</div>
+  if (error) return <ErrorPage error={error} />
 
   if (loading) {
     return (

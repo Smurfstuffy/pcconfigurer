@@ -30,6 +30,8 @@ import MotherBoard from './components/pages/product/Motherboard';
 import PowerSupply from './components/pages/product/PowerSupply';
 import Storage from './components/pages/product/Storage';
 
+import PageNotFound from './components/common/ErrorPage';
+
 const App = () => {
   const { user } = useUserContext();
 
@@ -139,6 +141,10 @@ const App = () => {
           path: "signin",
           element: !user ? <SignIn /> : <Navigate to="/" />,
         },
+        {
+          path: "*",
+          element: <PageNotFound />
+        }
       ],
     },
   ]);

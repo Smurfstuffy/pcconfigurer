@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(uri)
+mongoose.connect(localUri)
   .then((result) => app.listen(8080))
   .catch((err) => console.log('failed to connect to db'))
 

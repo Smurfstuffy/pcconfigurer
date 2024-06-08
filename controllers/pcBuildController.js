@@ -57,7 +57,7 @@ async function getPCBuildById(req, res) {
     }
     res.status(200).json(pcBuild);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ message: 'PC Build with this ID is not found' });
   }
 }
 

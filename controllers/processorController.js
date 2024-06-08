@@ -64,7 +64,7 @@ const getProcessorById = async (req, res) => {
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Invalid ID format' });
+      return res.status(400).json({ message: 'Product with this ID is not found' });
     }
 
     const product = await Processor.findById(id);

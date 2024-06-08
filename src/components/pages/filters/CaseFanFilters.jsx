@@ -1,17 +1,19 @@
 import { useState } from "react";
 
-const CaseFanFilters = ({ setBody }) => {
+const CaseFanFilters = ({ setBody, setSearchQuery, setOpened }) => {
   const [minSize, setMinSize] = useState(40);
   const [maxSize, setMaxSize] = useState(200);
 
   const [isPwm, setPwm] = useState(false);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       minSize: minSize,
       maxSize: maxSize,
       pwm: isPwm,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

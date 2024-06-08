@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const GraphicalCardFilters = ({ setBody }) => {
+const GraphicalCardFilters = ({ setBody, setSearchQuery, setOpened }) => {
 
   const [minMemory, setMinMemory] = useState(2);
   const [maxMemory, setMaxMemory] = useState(48);
@@ -12,6 +12,7 @@ const GraphicalCardFilters = ({ setBody }) => {
   const [maxLength, setMaxLength] = useState(500);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       minMemory: minMemory,
       maxMemory: maxMemory,
@@ -19,7 +20,8 @@ const GraphicalCardFilters = ({ setBody }) => {
       maxCoreClock: maxCoreClock,
       minLength: minLength,
       maxLength: maxLength,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

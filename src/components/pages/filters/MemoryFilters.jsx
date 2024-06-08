@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const MemoryFilters = ({ setBody }) => {
+const MemoryFilters = ({ setBody, setSearchQuery, setOpened }) => {
   const [latency, setLatency] = useState([]);
 
   const [cl9, setCl9] = useState(false);
@@ -108,11 +108,13 @@ const MemoryFilters = ({ setBody }) => {
   }, [speed2133, speed2666, speed3200, speed3600, speed4000, speed4600, speed4800, speed5200, speed5600, speed6000]);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       speed: speed,
       sticks: sticks,
       capacity: capacity,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const CaseFilters = ({ setBody }) => {
+const CaseFilters = ({ setBody, setSearchQuery, setOpened }) => {
   const [type, setTypes] = useState([]);
 
   const [atx, setAtx] = useState(false);
@@ -34,10 +34,12 @@ const CaseFilters = ({ setBody }) => {
   }, [midTower, miniTower, desktop, fullTower]);
 
   const handleFiltersClick = () => {
+    setSearchQuery('');
     setBody({
       type: type,
       formFactor: formFactor,
-    })
+    });
+    setOpened(prev => !prev);
   }
 
   return (

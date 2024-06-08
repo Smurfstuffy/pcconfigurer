@@ -209,8 +209,8 @@ const Configuration = observer(() => {
           !isObjEmpty(PCConfig.config.storage)
         ) ?
           <div className="flex flex-col px-1 md:px-8 items-center">
-            <input type="text" placeholder='PC Build Name' className='input mt-2 md:w-1/3' value={pcBuildName} onChange={e => setPcBuildName(e.target.value)} />
-            <button className="primary-button mt-2 md:w-1/3" onClick={handleCreateBuild}>Publish my PC Build</button>
+            <input type="text" placeholder='PC Build Name' className='input mt-2 md:w-1/3 font-semibold' value={pcBuildName} onChange={e => setPcBuildName(e.target.value)} />
+            <button className="primary-button mt-2 md:w-1/3 px-1 md:px-0" onClick={handleCreateBuild}>Publish my PC Build</button>
           </div>
           :
           <></>

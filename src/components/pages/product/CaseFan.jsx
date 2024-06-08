@@ -1,7 +1,7 @@
 import useFetch from "../../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import getIdFromPath from "../../../functions/getIdFromPath";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../hooks/UserContex";
 import { observer } from "mobx-react-lite";
 import PCConfig from "../../../store/PCConfig";
@@ -22,6 +22,7 @@ const CaseFan = observer(() => {
   const { user } = useUserContext();
   const [prices, setPrices] = useState();
   const [pricesLoading, setPricesLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -67,6 +68,11 @@ const CaseFan = observer(() => {
     }
   }, [user, data])
 
+  const handleAdd = () => {
+    PCConfig.setFan(data);
+    navigate('/configuration');
+  }
+
   if (error) return <ErrorPage error={error} />
 
   if (loading) return <SkeletonProduct />
@@ -106,10 +112,10 @@ const CaseFan = observer(() => {
 
               <div className="flex p-2 ">
                 {isObjEmpty(PCConfig.config.fan) ?
-                  <button className="primary-button text-center w-full" onClick={() => PCConfig.setFan(data)}>Add Case Fan</button> :
+                  <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Case Fan</button> :
                   PCConfig.config.fan.name === data.name ?
                     <button className="neutral-button text-center w-full" onClick={() => PCConfig.removeFan()}>Remove Case Fan</button> :
-                    <button className="primary-button text-center w-full" onClick={() => PCConfig.setFan(data)}>Add Case Fan</button>
+                    <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Case Fan</button>
                 }
               </div>
             </div>

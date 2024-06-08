@@ -1,7 +1,7 @@
 import useFetch from "../../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import getIdFromPath from "../../../functions/getIdFromPath";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../hooks/UserContex";
 import { observer } from "mobx-react-lite";
 import PCConfig from "../../../store/PCConfig";
@@ -22,6 +22,7 @@ const CpuCooler = observer(() => {
   const { user } = useUserContext();
   const [prices, setPrices] = useState();
   const [pricesLoading, setPricesLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -67,6 +68,11 @@ const CpuCooler = observer(() => {
     }
   }, [user, data])
 
+  const handleAdd = () => {
+    PCConfig.setCooler(data);
+    navigate('/configuration');
+  }
+
   if (error) return <ErrorPage error={error} />
 
   if (loading) return <SkeletonProduct />
@@ -102,10 +108,10 @@ const CpuCooler = observer(() => {
 
               <div className="flex p-2 ">
                 {isObjEmpty(PCConfig.config.cooler) ?
-                  <button className="primary-button text-center w-full" onClick={() => PCConfig.setCooler(data)}>Add CPU Cooler</button> :
+                  <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add CPU Cooler</button> :
                   PCConfig.config.cooler.name === data.name ?
                     <button className="neutral-button text-center w-full" onClick={() => PCConfig.removeCooler()}>Remove CPU Cooler</button> :
-                    <button className="primary-button text-center w-full" onClick={() => PCConfig.setCooler(data)}>Add CPU Cooler</button>
+                    <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add CPU Cooler</button>
                 }
               </div>
             </div>

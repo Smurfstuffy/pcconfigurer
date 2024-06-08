@@ -1,7 +1,7 @@
 import useFetch from "../../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import getIdFromPath from "../../../functions/getIdFromPath";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate  } from "react-router-dom";
 import { useUserContext } from "../../../hooks/UserContex";
 import { observer } from "mobx-react-lite";
 import PCConfig from "../../../store/PCConfig";
@@ -22,6 +22,7 @@ const Case = observer(() => {
   const { user } = useUserContext();
   const [prices, setPrices] = useState();
   const [pricesLoading, setPricesLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -66,6 +67,11 @@ const Case = observer(() => {
       })();
     }
   }, [user, data])
+
+  const handleAdd = () => {
+    PCConfig.setCase(data);
+    navigate('/configuration');
+  }
 
   if (error) return <ErrorPage error={error} />
 
@@ -118,10 +124,10 @@ const Case = observer(() => {
 
               <div className="flex p-2 ">
                 {isObjEmpty(PCConfig.config.case) ?
-                  <button className="primary-button text-center w-full" onClick={() => PCConfig.setCase(data)}>Add Case</button> :
+                  <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Case</button> :
                   PCConfig.config.case.name === data.name ?
                     <button className="neutral-button text-center w-full" onClick={() => PCConfig.removeCase()}>Remove Case</button> :
-                    <button className="primary-button text-center w-full" onClick={() => PCConfig.setCase(data)}>Add Case</button>
+                    <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Case</button>
                 }
               </div>
             </div>

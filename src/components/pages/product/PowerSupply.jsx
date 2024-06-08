@@ -1,7 +1,7 @@
 import useFetch from "../../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import getIdFromPath from "../../../functions/getIdFromPath";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../hooks/UserContex";
 import { observer } from "mobx-react-lite";
 import PCConfig from "../../../store/PCConfig";
@@ -22,6 +22,7 @@ const PowerSupply = observer(() => {
   const { user } = useUserContext();
   const [prices, setPrices] = useState();
   const [pricesLoading, setPricesLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -66,6 +67,11 @@ const PowerSupply = observer(() => {
       })();
     }
   }, [user, data])
+
+  const handleAdd = () => {
+    PCConfig.setPowerSupply(data);
+    navigate('/configuration');
+  }
 
   if (error) return <ErrorPage error={error} />
 
@@ -114,10 +120,10 @@ const PowerSupply = observer(() => {
 
               <div className="flex p-2 ">
                 {isObjEmpty(PCConfig.config.powerSupply) ?
-                  <button className="primary-button text-center w-full" onClick={() => PCConfig.setPowerSupply(data)}>Add Power Supply</button> :
+                  <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Power Supply</button> :
                   PCConfig.config.powerSupply.name === data.name ?
                     <button className="neutral-button text-center w-full" onClick={() => PCConfig.removePowerSupply()}>Remove Power Supply</button> :
-                    <button className="primary-button text-center w-full" onClick={() => PCConfig.setPowerSupply(data)}>Add Power Supply</button>
+                    <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Power Supply</button>
                 }
               </div>
             </div>

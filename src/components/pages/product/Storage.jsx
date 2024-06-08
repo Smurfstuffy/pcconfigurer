@@ -1,7 +1,7 @@
 import useFetch from "../../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import getIdFromPath from "../../../functions/getIdFromPath";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../hooks/UserContex";
 import { observer } from "mobx-react-lite";
 import PCConfig from "../../../store/PCConfig";
@@ -22,6 +22,7 @@ const Storage = observer(() => {
   const { user } = useUserContext();
   const [prices, setPrices] = useState();
   const [pricesLoading, setPricesLoading] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (user) {
@@ -66,6 +67,11 @@ const Storage = observer(() => {
       })();
     }
   }, [user, data])
+
+  const handleAdd = () => {
+    PCConfig.setStorage(data);
+    navigate('/configuration');
+  }
 
   if (error) return <ErrorPage error={error} />
 
@@ -114,10 +120,10 @@ const Storage = observer(() => {
 
               <div className="flex p-2 ">
                 {isObjEmpty(PCConfig.config.storage) ?
-                  <button className="primary-button text-center w-full" onClick={() => PCConfig.setStorage(data)}>Add Storage</button> :
+                  <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Storage</button> :
                   PCConfig.config.storage.name === data.name ?
                     <button className="neutral-button text-center w-full" onClick={() => PCConfig.removeStorage()}>Remove Storage</button> :
-                    <button className="primary-button text-center w-full" onClick={() => PCConfig.setStorage(data)}>Add Storage</button>
+                    <button className="primary-button text-center w-full" onClick={() => handleAdd()}>Add Storage</button>
                 }
               </div>
             </div>

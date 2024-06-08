@@ -40,4 +40,30 @@ const signIn = async (req, res) => {
   res.status(200).json({username: user.username, token}); 
 }
 
-module.exports = {signUp, signIn};
+const verifyToken = async (req, res) => {
+  const { authorization } = req.headers
+
+  if (!authorization) {
+    return res.status(401).json({error: 'Authorization token required'})
+  }
+
+  const token = authorization.split(' ')[1]
+
+  try {
+    const { _id } = jwt.verify(token, 'secretkey')
+
+    const user  = await User.findOne({ _id }).select('_id username')
+
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ username: user.username, token });
+
+  } catch (error) {
+    console.log(error)
+    res.status(401).json({error: 'Request is not authorized'})
+  }
+}
+
+module.exports = {signUp, signIn, verifyToken};

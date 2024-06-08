@@ -102,4 +102,36 @@ const updateMotherboardWithImageUrls = async () => {
   }
 };
 
-module.exports = {getMotherBoards, getMotherboardById, updateMotherboardWithImageUrls};
+const searchMotherBoards = async (req, res) => {
+  const { query } = req.body;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 24;
+
+  if (!query) {
+    return res.status(400).json({ message: 'Search query is required' });
+  }
+
+  try {
+    const searchTerms = query.split(' ').map(term => `(?=.*${term})`).join('');
+    const regex = new RegExp(searchTerms, 'i'); 
+
+    const totalProducts = await MotherBoard.countDocuments({ name: { $regex: regex } });
+
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    const motherboards = await MotherBoard.find({ name: { $regex: regex } })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.json({
+      products: motherboards,
+      totalPages,
+      currentPage: page,
+      totalProducts,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error searching motherboards', error });
+  }
+};
+
+module.exports = {getMotherBoards, getMotherboardById, updateMotherboardWithImageUrls, searchMotherBoards};

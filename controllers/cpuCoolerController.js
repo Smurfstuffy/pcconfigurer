@@ -86,4 +86,36 @@ const updateCpuCoolerWithImageUrls = async () => {
   }
 };
 
-module.exports = {getCpuCoolers, getCpuCoolerById, updateCpuCoolerWithImageUrls};
+const searchCPUCoolers = async (req, res) => {
+  const { query } = req.body;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 24;
+
+  if (!query) {
+    return res.status(400).json({ message: 'Search query is required' });
+  }
+
+  try {
+    const searchTerms = query.split(' ').map(term => `(?=.*${term})`).join('');
+    const regex = new RegExp(searchTerms, 'i'); 
+
+    const totalProducts = await CpuCooler.countDocuments({ name: { $regex: regex } });
+
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    const coolers = await CpuCooler.find({ name: { $regex: regex } })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.json({
+      products: coolers,
+      totalPages,
+      currentPage: page,
+      totalProducts,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error searching CPU coolers', error });
+  }
+};
+
+module.exports = {getCpuCoolers, getCpuCoolerById, updateCpuCoolerWithImageUrls, searchCPUCoolers};

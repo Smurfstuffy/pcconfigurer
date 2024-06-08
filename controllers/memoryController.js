@@ -92,4 +92,36 @@ const updateMemoryWithImageUrls = async () => {
   }
 };
 
-module.exports = { getMemories, getMemoryById, updateMemoryWithImageUrls };
+const searchMemories = async (req, res) => {
+  const { query } = req.body;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 24;
+
+  if (!query) {
+    return res.status(400).json({ message: 'Search query is required' });
+  }
+
+  try {
+    const searchTerms = query.split(' ').map(term => `(?=.*${term})`).join('');
+    const regex = new RegExp(searchTerms, 'i'); 
+
+    const totalProducts = await Memory.countDocuments({ name: { $regex: regex } });
+
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    const memories = await Memory.find({ name: { $regex: regex } })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.json({
+      products: memories,
+      totalPages,
+      currentPage: page,
+      totalProducts,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error searching memories', error });
+  }
+};
+
+module.exports = { getMemories, getMemoryById, updateMemoryWithImageUrls, searchMemories };

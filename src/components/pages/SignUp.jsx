@@ -57,9 +57,9 @@ const SignUp = () => {
   }
 
   return (
-    <div className="relative">
-      <img src={backgroundImage} alt="PC_Components_2" className="w-screen object-cover h-screen" />
-      <div className='flex flex-col h-screen justify-center items-center absolute inset-0'>
+    <div className="relative h-full">
+      <img src={backgroundImage} alt="PC_Components_2" className="w-screen object-cover h-full" />
+      <div className='flex flex-col justify-center items-center absolute inset-0'>
         <h1 className='text-3xl md:text-4xl font-bold text-white'>Please, Sign Up</h1>
         <div className='rounded-xl bg-gray-200 border border-gray-400 mt-2 md:mt-4'>
           <form className='flex flex-col justify-center items-center py-4 px-10 md:px-36 md:py-6'>

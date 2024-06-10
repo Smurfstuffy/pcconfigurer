@@ -151,7 +151,7 @@ const ProcessorFilters = ({ setBody, setSearchQuery, setOpened }) => {
             className="mr-1"
             value={true}
             checked={isSmt === true}
-            onClick={() => setSmt(!isSmt)}
+            onChange={() => setSmt(!isSmt)}
           />
           Yes
         </label>
@@ -161,7 +161,7 @@ const ProcessorFilters = ({ setBody, setSearchQuery, setOpened }) => {
             className="mr-1"
             value={false}
             checked={isSmt === false}
-            onClick={() => setSmt(!isSmt)}
+            onChange={() => setSmt(!isSmt)}
           />
           No
         </label>

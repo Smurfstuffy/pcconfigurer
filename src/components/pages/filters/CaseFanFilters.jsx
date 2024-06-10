@@ -54,7 +54,7 @@ const CaseFanFilters = ({ setBody, setSearchQuery, setOpened }) => {
             className="mr-1"
             value={true}
             checked={isPwm === true}
-            onClick={() => setPwm(!isPwm)}
+            onChange={() => setPwm(!isPwm)}
           />
           Yes
         </label>
@@ -64,7 +64,7 @@ const CaseFanFilters = ({ setBody, setSearchQuery, setOpened }) => {
             className="mr-1"
             value={false}
             checked={isPwm === false}
-            onClick={() => setPwm(!isPwm)}
+            onChange={() => setPwm(!isPwm)}
           />
           No
         </label>

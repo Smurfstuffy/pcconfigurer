@@ -42,29 +42,34 @@ const getPartImageByNameFunc = async (req) => {
     }
 
     const words = nameToFind.split(' ');
-
     const regex = new RegExp(words.map(word => `(?=.*${word})`).join(''), 'i');
 
-    const partsPrices = await PartsPrice.find({
-      source: 'rozetka',
-      'products.title': regex,
-    });
+    const sources = ['moyo', 'foxtrot', 'Allo', 'Telemart'];
 
-    const filteredProducts = partsPrices.flatMap(partsPrice =>
-      partsPrice.products.filter(product => regex.test(product.title))
-    );
+    for (const source of sources) {
+      const partsPrices = await PartsPrice.find({
+        source: source,
+        'products.title': regex,
+      });
 
-    const jpgProduct = filteredProducts.find(product => /\.jpg$/.test(product.imgUrl));
+      const filteredProducts = partsPrices.flatMap(partsPrice =>
+        partsPrice.products.filter(product => regex.test(product.title))
+      );
 
-    if (!jpgProduct) {
-      return undefined;
+      const jpgProduct = filteredProducts.find(product => /\.jpg$/.test(product.imgUrl));
+
+      if (jpgProduct) {
+        return jpgProduct.imgUrl;
+      }
     }
 
-    return jpgProduct.imgUrl;
+    return undefined;
   } catch (error) {
-     return undefined;
+    return undefined;
   }
-};
+}
+
+
 
 const getPartsByName = async (req, res) => {
   try {

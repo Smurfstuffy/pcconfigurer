@@ -71,19 +71,22 @@ const updateCaseFanWithImageUrls = async () => {
     const caseFans = await CaseFan.find();
 
     for (const caseFan of caseFans) {
-      console.log(caseFan.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: caseFan.name } });
-      console.log(response)
-      if (response) {
-        caseFan.imgUrl = response;
-        console.log('Image URLs added to CaseFan successfully');
+      if (!caseFan.imgUrl) {  
+        console.log(caseFan.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: caseFan.name } });
+        console.log(response);
+        if (response) {
+          caseFan.imgUrl = response;
+          console.log('Image URLs added to CaseFan successfully');
+        } else {
+          caseFan.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await caseFan.save();
       } else {
-        caseFan.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this case fan');
       }
-      await caseFan.save();
     }
-    
   } catch (error) {
     console.error('Error updating CaseFan with image URLs:', error);
   }

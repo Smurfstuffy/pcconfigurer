@@ -84,23 +84,27 @@ const updateMotherboardWithImageUrls = async () => {
     const motherboards = await MotherBoard.find();
 
     for (const motherboard of motherboards) {
-      console.log(motherboard.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: motherboard.name } });
-      console.log(response)
-      if (response) {
-        motherboard.imgUrl = response;
-        console.log('Image URLs added to Motherboard successfully');
+      if (!motherboard.imgUrl) {  // Check if the image URL is not already set
+        console.log(motherboard.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: motherboard.name } });
+        console.log(response);
+        if (response) {
+          motherboard.imgUrl = response;
+          console.log('Image URLs added to Motherboard successfully');
+        } else {
+          motherboard.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await motherboard.save();
       } else {
-        motherboard.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this motherboard');
       }
-      await motherboard.save();
     }
-    
   } catch (error) {
     console.error('Error updating Motherboard with image URLs:', error);
   }
 };
+
 
 const searchMotherBoards = async (req, res) => {
   const { query } = req.body;

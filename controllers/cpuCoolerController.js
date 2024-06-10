@@ -68,19 +68,22 @@ const updateCpuCoolerWithImageUrls = async () => {
     const coolers = await CpuCooler.find();
 
     for (const cooler of coolers) {
-      console.log(cooler.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: cooler.name } });
-      console.log(response)
-      if (response) {
-        cooler.imgUrl = response;
-        console.log('Image URLs added to CpuCooler successfully');
+      if (!cooler.imgUrl) {  
+        console.log(cooler.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: cooler.name } });
+        console.log(response);
+        if (response) {
+          cooler.imgUrl = response;
+          console.log('Image URLs added to CpuCooler successfully');
+        } else {
+          cooler.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await cooler.save();
       } else {
-        cooler.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this cooler');
       }
-      await cooler.save();
     }
-    
   } catch (error) {
     console.error('Error updating CpuCooler with image URLs:', error);
   }

@@ -83,31 +83,35 @@ const updateGpuWithImageUrls = async () => {
     const graphicalCards = await GraphicalCard.find();
 
     for (const graphicalCard of graphicalCards) {
-      if (!graphicalCard.name.includes(graphicalCard.chipset)) {
-        const firstSpaceIndex = graphicalCard.name.indexOf(' ');
-        if (firstSpaceIndex !== -1) {
-          graphicalCard.name = graphicalCard.name.slice(0, firstSpaceIndex + 1) + graphicalCard.chipset + ' ' + graphicalCard.name.slice(firstSpaceIndex + 1);
-        } else {
-          graphicalCard.name = graphicalCard.chipset + ' ' + graphicalCard.name;
+      if (!graphicalCard.imgUrl) {  
+        if (!graphicalCard.name.includes(graphicalCard.chipset)) {
+          const firstSpaceIndex = graphicalCard.name.indexOf(' ');
+          if (firstSpaceIndex !== -1) {
+            graphicalCard.name = graphicalCard.name.slice(0, firstSpaceIndex + 1) + graphicalCard.chipset + ' ' + graphicalCard.name.slice(firstSpaceIndex + 1);
+          } else {
+            graphicalCard.name = graphicalCard.chipset + ' ' + graphicalCard.name;
+          }
         }
-      }
-      console.log(graphicalCard.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: graphicalCard.name } });
-      console.log(response)
-      if (response) {
-        graphicalCard.imgUrl = response;
-        console.log('Image URLs added to GraphicalCard successfully');
+        console.log(graphicalCard.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: graphicalCard.name } });
+        console.log(response);
+        if (response) {
+          graphicalCard.imgUrl = response;
+          console.log('Image URLs added to GraphicalCard successfully');
+        } else {
+          graphicalCard.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await graphicalCard.save();
       } else {
-        graphicalCard.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this graphical card');
       }
-      await graphicalCard.save();
     }
-    
   } catch (error) {
     console.error('Error updating GraphicalCard with image URLs:', error);
   }
 };
+
 
 const searchGraphicalCards = async (req, res) => {
   const { query } = req.body;

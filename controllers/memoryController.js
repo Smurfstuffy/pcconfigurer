@@ -74,19 +74,22 @@ const updateMemoryWithImageUrls = async () => {
     const memories = await Memory.find();
 
     for (const memory of memories) {
-      console.log(memory.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: memory.name } });
-      console.log(response)
-      if (response) {
-        memory.imgUrl = response;
-        console.log('Image URLs added to Memory successfully');
+      if (!memory.imgUrl) {  
+        console.log(memory.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: memory.name } });
+        console.log(response);
+        if (response) {
+          memory.imgUrl = response;
+          console.log('Image URLs added to Memory successfully');
+        } else {
+          memory.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await memory.save();
       } else {
-        memory.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this memory');
       }
-      await memory.save();
     }
-    
   } catch (error) {
     console.error('Error updating Memory with image URLs:', error);
   }

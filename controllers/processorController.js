@@ -83,18 +83,22 @@ const updateCPUsWithImageUrls = async () => {
     const processors = await Processor.find();
 
     for (const cpu of processors) {
-      console.log(cpu.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: cpu.name } });
-      console.log(response)
-      if (response) {
-        cpu.imgUrl = response;
-        console.log('Image URLs added to CPUs successfully');
+      if (!cpu.imgUrl) { 
+        console.log(cpu.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: cpu.name } });
+        console.log(response);
+        if (response) {
+          cpu.imgUrl = response;
+          console.log('Image URLs added to CPUs successfully');
+        } else {
+          cpu.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await cpu.save();
       } else {
-        cpu.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this CPU');
       }
-      await cpu.save();
-    }   
+    }
   } catch (error) {
     console.error('Error updating CPUs with image URLs:', error);
   }

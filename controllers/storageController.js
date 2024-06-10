@@ -56,7 +56,7 @@ const getStorages = async (req, res) => {
 }
 
 const getStorageById = async (req, res) => {
-  const { id } = req.body; 
+  const { id } = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -79,23 +79,27 @@ const updateStoragesWithImageUrls = async () => {
     const storages = await Storage.find();
 
     for (const storage of storages) {
-      console.log(storage.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: storage.name } });
-      console.log(response)
-      if (response) {
-        storage.imgUrl = response;
-        console.log('Image URLs added to Storage successfully');
+      if (!storage.imgUrl) {
+        console.log(storage.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: storage.name } });
+        console.log(response);
+        if (response) {
+          storage.imgUrl = response;
+          console.log('Image URLs added to Storage successfully');
+        } else {
+          storage.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await storage.save();
       } else {
-        storage.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this storage');
       }
-      await storage.save();
     }
-
   } catch (error) {
     console.error('Error updating Storages with image URLs:', error);
   }
 };
+
 
 const searchStorages = async (req, res) => {
   const { query } = req.body;
@@ -108,7 +112,7 @@ const searchStorages = async (req, res) => {
 
   try {
     const searchTerms = query.split(' ').map(term => `(?=.*${term})`).join('');
-    const regex = new RegExp(searchTerms, 'i'); 
+    const regex = new RegExp(searchTerms, 'i');
 
     const totalProducts = await Storage.countDocuments({ name: { $regex: regex } });
 

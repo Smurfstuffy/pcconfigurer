@@ -74,20 +74,23 @@ const updatePowerSupplyWithImageUrls = async () => {
     const powerSupplies = await PowerSupply.find();
 
     for (const powerSupply of powerSupplies) {
-      const nameToFind = powerSupply.name.replace(/\s*\(.*?\)\s*/g, '').trim();
-      console.log(nameToFind)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: nameToFind } });
-      console.log(response)
-      if (response) {
-        powerSupply.imgUrl = response;
-        console.log('Image URLs added to PowerSupply successfully');
+      if (!powerSupply.imgUrl) {  
+        const nameToFind = powerSupply.name.replace(/\s*\(.*?\)\s*/g, '').trim();
+        console.log(nameToFind);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: nameToFind } });
+        console.log(response);
+        if (response) {
+          powerSupply.imgUrl = response;
+          console.log('Image URLs added to PowerSupply successfully');
+        } else {
+          powerSupply.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await powerSupply.save();
       } else {
-        powerSupply.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this power supply');
       }
-      await powerSupply.save();
     }
-    
   } catch (error) {
     console.error('Error updating PowerSupplies with image URLs:', error);
   }

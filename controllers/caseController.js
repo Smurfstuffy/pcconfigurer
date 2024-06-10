@@ -74,19 +74,22 @@ const updateCasesWithImageUrls = async () => {
     const cases = await Case.find();
 
     for (const pcCase of cases) {
-      console.log(pcCase.name)
-      const response = await getPartImageByNameFunc({ body: { nameToFind: pcCase.name } });
-      console.log(response)
-      if (response) {
-        pcCase.imgUrl = response;
-        console.log('Image URLs added to Case successfully');
+      if (!pcCase.imgUrl) {  
+        console.log(pcCase.name);
+        const response = await getPartImageByNameFunc({ body: { nameToFind: pcCase.name } });
+        console.log(response);
+        if (response) {
+          pcCase.imgUrl = response;
+          console.log('Image URLs added to Case successfully');
+        } else {
+          pcCase.imgUrl = null;
+          console.log('Image URLs null');
+        }
+        await pcCase.save();
       } else {
-        pcCase.imgUrl = null;
-        console.log('Image URLs null');
+        console.log('Image URL already exists for this case');
       }
-      await pcCase.save();
     }
-    
   } catch (error) {
     console.error('Error updating Case with image URLs:', error);
   }
